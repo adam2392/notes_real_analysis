@@ -1,0 +1,721 @@
+\documentclass[class=article, crop=false]{standalone}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage[subpreambles=true]{standalone}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+% \theoremstyle{definition}
+% \newtheorem{definition}{Definition}[section]
+
+% \theoremstyle{remark}
+% \newtheorem*{remark}{Remark}
+
+% \theoremstyle{lemma}
+% \newtheorem*{lemma}{Lemma}
+
+% \theoremstyle{theorem}
+% \newtheorem*{theorem}{Theorem}
+
+% \theoremstyle{corollary}
+% \newtheorem*{corollary}{Corollary}
+
+% \theoremstyle{property}
+% \newtheorem*{property}{Property}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\begin{document}
+\section{Differentiation of Lebesgue Integrals}
+	Now that we have examined the Lebesgue measure theory and the integration theory that follows it, specifically $L^1$ and $L^p$ spaces, we turn our attention to differentiation. Differentiation is understood as an inverse operation compared to integration and we seek to formalize the fundamental theorem of calculus in the Lebesgue setting. There are two fundamental theorems of calculus (FTC) questions that we would like to answer:
+
+	\begin{enumerate}
+		\item FTC1: If f is integrable on [a,b] and F is its indefinite integral $F(x) = \int_a^x f(y) dy$, then does this imply that F is differentiable (at least for a.e. x) and that specifically $F' = f$?
+		\item FTC2: What conditinos on a function F on [a,b] guarantee that the derivative exists for a.e. x, that this function F is integrable and that moreover the fundamental theorem of calculus holds:
+
+			$$F(b) - F(a) = \int_a^b F'(x) dx$$
+	\end{enumerate}
+
+	% define local integrability
+	In order to extend the FTC to general Lebesgue-measurable functions, we define the notion of a locally integrable function. That is:
+
+	\begin{definition}
+	\label{def:locally_integrable}
+		A function $f : \mathbb{R}^d \rightarrow \mathbb{R}$ is locally integrable if it is Lebesgue measurable and
+
+			$$\int_K |f(x)| dx < \infty$$
+
+		That is it is integrable over a compact subset of its domain.
+	\end{definition}
+
+	To write the FTC1, we usually say:
+
+		$$f(x) = \frac{d}{dx} \int_a^x f(y) dy$$
+
+	whichcan be written in terms of symmetric differences based on the definition of the derivative. Say we define $F(x) = \int_a^x f(y) dy$, then:
+
+		$$f(x) = \lim_{h \rightarrow 0} \frac{F(x+h) - F(x)}{h} = \lim_{r \rightarrow 0} \int_x^{x+r} f(y) dy$$
+
+	which can also be written as:
+
+		$$f(x) = \lim_{r \rightarrow 0^+} \frac{1}{2r} \int_{x-r}^{x+r} f(y) dy$$
+
+	with the nth dimension version just using balls with radius r and centered at $x \in \mathbb{R}^d$. This form of the FTC1 is useful because we can then make use of our notion of Lebesgue measure and the maximal functions.
+
+	\subsection{Mean Value Theorem}
+		Before diving into Lebesgue theory for differentiation, we should remind ourselves of the important Mean-Value theorem (MVT), which states:
+
+		\begin{theorem}
+		\label{thm:mvt}
+			Let $f: [a, b] \rightarrow \mathbb{R}$ be a continuous function on a closed interval [a, b] and differentiable on the open interval (a, b) with a < b. Then there exists some $c \in (a, b)$ such that:
+
+				$$f'(c) = \frac{f(b) - f(a)}{b - a}$$
+
+		\end{theorem}
+		% \begin{theorem} [For vector valued functions]
+		% 	If instead f is a continuous vector-valued function $f: [a,b] \rightarrow \mathbb{R}^d$
+
+		% 	which is differentiatlb,e then 
+		% \end{theorem}
+	\subsection{Differentiation of the Lebesgue Integral}
+		To define the differentiation of the integral, we define a function f on [a,b] that is integrable. We define:
+
+			$$F(x) = \int_a^x f(y) dy, \quad a \le x \le b$$
+
+		We call F the indefinite integral of f. To define the differentiation of F, we recall the definition of the derivative as the limit of a quotient:
+
+			$$F'(x) = \lim_{h \rightarrow 0} \frac{F(x+h) - F(x)}{h}$$
+
+		\paragraph{The averaging problem in differentiation of integrals}
+		We are interested in the following problem: If f is integrable, then is it true that if you take an average of functions over a ball, as you take the limit of the measure of the ball going to zero, that the limit is achieved for a.e. x?
+
+		The answer is yes when f is continuous at x.
+		\begin{lemma}
+			If f is integrable on $\mathbb{R}^d$, and is continuous at x, then:
+
+				$$f(x) = \lim_{m(B) \rightarrow 0} \frac{1}{m(B)} \int_B f(y) dy = f(x)$$
+		\end{lemma}
+		\begin{proof}
+			(*) For every $\epsilon > 0$, there exists a $\delta > 0$ such that if $|x - y| < \delta$, then $|f(x) - f(y)| < \epsilon$. 
+
+			% setup a ball that can contain both x and y
+			If say radius of ball B is $< \delta / 2$ (worst case any two points have at most distance $\delta$), and $x \in B$, then (*) holds whenever $y \in B$ as well.
+
+			We want f(x) to be close to this "averaging" function that we are interested in. Note that:
+
+				$$|f(x) - \frac{1}{m(B)} \int_B f(y) dy | = |\frac{1}{m(B)} \int_B (f(x) - f(y) dy |$$
+
+			Then we have that:
+			\begin{align}
+				|\frac{1}{m(B)} \int_B (f(x) - f(y) dy | \\
+				\le \frac{1}{m(B)} \int_B |f(x) - f(y)| dy \quad \text{(By tri-ineq)} \\
+				\le \frac{1}{m(B)} \epsilon m(B) = \epsilon
+			\end{align}
+			Since $\epsilon$ was arbitrary, then we have our equality.
+		\end{proof}
+
+		Now, we would like to answer this question for not only an x where f(x) is continous, but absolutely at \textbf{every x}. This leads us to the Hardy-Littlewood Maximal function, where we will see that the answer is yes.
+
+		Note that the definition above can be rewritten as:
+
+			$$\frac{1}{h} \int_x^{x+h} f(y) dy = \frac{1}{|I|} \int_I f(y) dy$$
+
+		where $I = (x, x+h)$ interval, and $|I|$ is the length of that interval. Essentially the above is saying that we take an \textbf{average} value of f over the interval I. Then as you take the limit as $|I|$ goes to zero, then we expect these averages to tend to f(x). Now, we want to know when does th following equation hold? (What constraints are needed on the functions and the points x)
+
+			$$\lim_{|I| \rightarrow 0,\ x \in I} \frac{1}{|I|} \int_I f(y) dy = f(x)$$
+
+		or for higher dimensions in more generality:
+
+			$$\lim_{m(B) \rightarrow 0,\ x \in B} \frac{1}{m(B)} \int_B f(y) dy = f(x)$$
+
+		for a.e. x. The limit is taken as the volume of open balls containing x (in high dimensions) goes towards zero.
+
+		\subsection{Covering Lemma To Demonstrate Weak-L1 Property}
+			In order to prove the Hardy-littlewood theorem, which will tell us that the maximal functions of an integrable function are weak-$L^1$, then we need the notion of a covering lemma, which states that any \textbf{finite} collection of open balls in $\mathbb{R}^d$ has a \textbf{disjoint subcollection} that can cover a fraction of the original collection. The fraction is a exponent based on the dimension of the space.
+
+			\begin{lemma} [Vitali Covering Argument]
+				Suppose $B = \{B_1, B_2, ..., B_N\}$ is a finite collection of open balls in $\mathbb{R}^d$. Then there exists a disjoint sub-collection of $B_{i_1}, B_{i_2}, ..., B_{i_k}$ of B such that:
+
+					$$m(\bigcup_{l=1}^N B_l) \le 3^d \sum_{j=1}^k m(B_{i_j})$$
+
+				That is we may find a disjoint sub-collection of balls that covers a fraction of the region covered by the original collection. This fraction scales exponentially as a function of the dimensionality of the space.
+			\end{lemma}
+			\begin{proof}
+				% take two balls and take the larger one with now 3x radius. 
+				Suppose B and B' are two balls that intersect, with radius of B' (call it r') being less than or equal to B (call it r). Then $B' \subset \tilde{B} = \{y \in \mathbb{R}^d : |x-y| \le 3r \}$, where $\tilde{B}$ is the ball centered at x with three-times the radius of B. 
+
+				Note that we need three times the radius of B to fully cover B'. If B and B' have the same radius and are touching then any radius less then 3r would not fully cover B'.
+
+				% measure of these balls
+				The measure of $\tilde{B}$ by the dilation property of measure is $m(\tilde{B}) = 3^d m(B)$.
+
+				% begin iterative procedure of choosing balls based on the above
+				Now, we can state an iterative procedure for choosing balls based on the above: We begin by choosing $B_1'$ that is the ball with the largest radius from our collection. Then we remove all balls in our collection that intersect with $B_1'$. Then choose the next-largest ball from our remaining collection. In this way, we obtain a subcollection of balls, $\{B_1', ..., B_k'\}$ that are disjoint by definition. Now if we expand each of these balls as done above by a factor of 3, then we get that they cover the original collection plus more.
+
+					$$\bigcup_{i=1}^N B_i \subset \bigcup_{i=1}^k \tilde{B}_i'$$
+
+				% use properties of measure to obtain result
+				Now by monotonicity, disjoint finite additivity and dilation-properties of measure, we have:
+
+					$$m(\bigcup_{i=1}^N B_i) \le m(\bigcup_{i=1}^k \tilde{B}_i') = 3^d \sum_{i=1}^k m(B_i')$$
+			\end{proof}
+
+		\subsection{Hardy-Littlewood Maximal Function and Weak-L1 Functions}
+			First, we define the Weak-L1 space. 
+
+			\begin{definition}
+				A measurable function, $f : \mathbb{R}^d \rightarrow \mathbb{R}$ is in weak-$L^1(\mathbb{R}^d)$ if there exists a constant $C_f$ that depends on the function f, but not on t, such that:
+
+					$$m(\{x \in \mathbb{R}^d : |f(x)| > t\}) \le \frac{C}{t}$$
+			\end{definition}
+
+			By the Chebyshev inequality, we have that for integrable functions:
+
+				$$m(\{x \in \mathbb{R}^d : |f(x)| > t\}) \le \frac{1}{t}||f||_{L^1}$$
+
+			where C is exactly the L1 norm of f. So, weak-L1 functions are a generalization of L1 functions, where the constant term depends on the function.
+
+			% maximal function
+			If f is integrable on $\mathbb{R}^d$, then we define its maximal function $f^*$ as:
+
+				$$f^*(x) = \sup_{x \in B} \frac{1}{m(B)} \int_B |f(y)| dy, \quad x \in \mathbb{R}^d$$
+
+			where the supremum is taken over all balls containing the point x. Note, we replace the limit in the averaging problem with a supremum and f by its absolute value. Now, one might ask what properties this $f^*$ function has? The following theorem states that it is measurable, finite for a.e. x, and satisfies a "weak-type" inequality, where it is not "that much larger" then f(x).
+
+			We shall also see that $f^*$ is not necessarily integrable, even if f is integrable. The inequality in the theorem part iii) is sort of the "best-substitute" for integrability.
+
+			\begin{theorem} [Properties of the Maximal Function]
+			\label{thm:properties_hardylittlewood_maximal_function}
+				Suppose f is integrable on $\mathbb{R}^d$, then the following are true:
+
+					i) $f^*$ is measurable
+
+					ii) $f^*(x) < \infty$ for a.e. x
+
+					iii) f is a weak-L1 function: $m(\{x \in \mathbb{R}^d: \ f^*(x) > \alpha \}) \le \frac{A}{\alpha} ||f||_{L^1(\mathbb{R}^d)}$ for all $\alpha > 0$ where $A = 3^d$ and $||f|| = \int |f(x)| dx$.
+			\end{theorem}
+			\begin{proof}
+				$f^*$ is measurable. We will just show that the set $E_\alpha = \{x \in \mathbb{R}^d : f^*(x) > \alpha\}$ is open. Note that if $x \in E_\alpha$, then there exists a ball centered at x with radius $\epsilon$, such that $x \in B$ and 
+
+					$$\frac{1}{m(B)} \int_B |f(y)| dy > \alpha$$
+
+				Then if you take any point $y \in \mathbb{R}^d$ such that $|y - x| < \epsilon / 2$, then y will also belong to B as well and hence belongs to $E_\alpha$. Therefore, $E_\alpha$ is open, and hence measurable. 
+			\end{proof}
+			\begin{proof}
+				If we take set $E_\infty = \{x : f^*(x) = \infty \}$, then it is a subset of $E_\alpha$. If we take the limit as $\alpha \rightarrow \infty$, then by the third property we have that:
+
+					$$m(E_\infty) \le 0$$
+				 
+				and so must have measure zero. Therfore $f^* < \infty$ for a.e. x.
+			\end{proof}
+			\begin{proof}
+				% construct set of interest for part iii)
+				We fix $\alpha > 0$ and let:
+
+					$$E_\alpha = \{x \in \mathbb{R}^d : f^* > \alpha\}$$
+
+				as the set of interest where $f^*$ is bigger then our fixed $\alpha$. 
+
+				% measure that set using Lebesgue properties and formulate problem wrt a compact subset
+				The measure of that set can be written as the supremum over compact subsets.
+
+					$$m(E_\alpha) = \sup \{m(K) : K \subset E_\alpha \ \text{compact}\}$$
+				Since this is a supremum, it suffices to show that:
+					$$m(K) \le \frac{C}{t} \int |f(y)| dy$$
+				for every compact subset K of $E_\alpha$. Now that we are dealing with a compact subset, by the definition of compactness, there exists a finite subcover. Now that there is a finite subcover, we know by the Vitali Covering lemma that there exists a subcollection of balls that cover a fraction of the original subset up to a factor of $3^d$.
+
+				% setup finite subcover and use vitali cocvering lemma to bound measure of K
+				We call our finite subcover: $\{B_1, ..., B_N\}$. Then if $x \in K$, then there is an open ball $B_x$ centered at x such that:
+
+					$$\frac{1}{m(B_x)} \int_{B_x} |f(y)|dy > \alpha$$
+
+				by definition of the $E_\alpha$ set, or in other words:
+
+					$$m(B_x) < \frac{1}{\alpha} \int_{B_x} |f(y)| dy$$
+
+				By taking a finite sucollection of our subcover that are all disjoint, $\{B_1', ..., B_k'\}$, we get the series of inequalities:
+
+				\begin{align}
+					m(K) \le \sum_{i=1}^N m(B_i) \\
+						\le 3^d \sum_{i=1}^k m(B_i') \\
+						\le \frac{3^d}{\alpha} \sum_{i=1}^k \int_{B_i'} |f(y)| dy \\
+						= \frac{3^d}{\alpha}  \int_{\cup_{j=1}^k} B_j' |f(y)| dy \quad \text{(by def of integral)} \\
+						\le \frac{3^d}{\alpha} \int_{\mathbb{R}^d} |f(y)| dy \quad \text{(By monotonicity)}
+				\end{align}
+			\end{proof}
+		\subsection{Lebesgue Differentiation Theorem}
+			Now that we have an understanding of the maximal function, we are interested in a solution to the averaging problem. The Lebesgue differentiation theorem tells us that if a function is locally integrable, then we can perform the FTC1, and take the derivative of the integral to get the function inside the integrand.
+
+			\begin{theorem}
+			\label{thm:lebesgue_differentiation}
+				If $f \in L^1_{loc}(\mathbb{R}^d)$, then:
+
+					$$\lim_{m(B(x)) \rightarrow 0} \frac{1}{m(B)} \int_B f(y) dy = f(x)$$
+
+				for a.e. x.
+			\end{theorem}
+			\begin{proof}
+
+			\end{proof}
+
+			Now that we have a theorem stating when we can differentiate an integral (i.e. when it is locally integrable), then we can define a set of points x, for which the limits exists for a suitable function f. This set is called the Lebesgue set.
+
+			\begin{definition}
+				If $f \in L^1_{loc}$, then a point $x \in \mathbb{R}^d$ belongs to the Lebesgue set) of f, if there exists a constant $c \in \mathbb{R}$ such that:
+
+					$$\lim_{r \rightarrow 0} \frac{1}{m(B_r(x))} \int_B |f(y) - c| dy = 0$$
+			\end{definition}
+
+			That is if you have points in the Lebesgue set, then you have the results of the HWL maximal theorem. The Lebesgue set of f, does depend on which f we choose. It has some nice properties that allow us to take a wide variety of averages and recover points of the functions. 
+	\subsection{Good Kernels and Approximating the Identity}
+		Now that we have explored the averaging problem and shown various properties of the maximal function in relation to differentiation of an integral, we want to now look at averages of functions given as convolutions. Namely:
+
+			$$(f * K_\delta)(x) = \int_{\mathbb{R}^d} f(x-y)K_\delta(y) dy$$
+
+		where f is an integrable function, which is \textbf{fixed}, while the $K_\delta$ varies over a class of fucntions, referred to as \textbf{kernels}. We are interested in convolutions and their integrals because they come up in the Fourier transform.
+
+		\begin{definition} [Good Kernels]
+			We specifically call $K_\delta$ \textbf{good kernels} if they are integrable and satisfy the following conditions for $\delta > 0$:
+
+			\begin{enumerate}
+				\item Normalization to 1: $\int_{\mathbb{R}^d} K_\delta(x) dx = 1$
+				\item Bounded L1 norm: $\int_{\mathbb{R}^d} |K_\delta(x)| dx \le A$ 
+				\item For every $\eta > 0$, we have: $\int_{|x| \ge \eta} |K_\delta(x)| dx \rightarrow 0$ as $\delta \rightarrow 0$
+			\end{enumerate}
+		\end{definition}
+
+		\begin{definition} [Approximations to the Identity Kernels]
+			Restricting the class of kernels to be more narrow then "good kernels", we define approximations to the identity kernels as $K_\delta$ that are integrable and satisfy the following conditions:
+
+			\begin{enumerate}
+				\item Normalization to 1: $\int_{\mathbb{R}^d} K_\delta(x) dx = 1$
+				\item Bounded at every $\delta$: $|K_\delta(x)| \le A \delta^{-d}$ for all $\delta > 0$ 
+				\item $|K_\delta (x) | \le  A \delta / |x|^{d+1}$ for all $\delta > 0$ and $x \in \mathbb{R}^d$
+			\end{enumerate}
+
+			Note that condition i) is the same as a good kernel, but conditions ii and iii are more restrictive then what is mentioned in good kernels. Therefore, all "approximations to the identity kernels" are also "good kernels".
+		\end{definition}
+	\subsection{Differentiation of Functions}
+		Now, we explore the second Fundamental theorem of calculus in the view of Lebesgue measure. That is, under what general conditions does the following hold?
+
+			$$F(b) - F(a) = \int_a^b F'(x) dx$$
+
+		There are two problems related to existence and measurability.
+
+		First, off the RHS is complicated if $F'(x)$ does not exist. The exemplar is the Weierstrass function that is continuous, but nowhere differentiable. So F being continuous is not enough of a condition to guarantee the FTC2. 
+
+		Second, if $F'(x)$ exists, it might not be Lebesgue measurable.
+
+		\subsubsection{Bounded Variation - To Enable Differentiability Almost Everywhere}
+			We study a class of functions that have \textbf{bounded variation} that will give us existence of the derivative. We will see that functions of bounded variation are differentiable a.e. But we will see by usage of the Cantor-lebesgue function, that it does not guarantee the validity of the FTC2. After bounded variation, we will explore this next concept of \textbf{absolute continuity} that will give us the necessary conditions for the FTC2. First we define a few keywords.
+
+			Let $\gamma$ be a parametrized curve in the plane: $z(t) = (x(t), y(t))$ with $a \le t \le b$. x and y are continuous real valued functions supported on [a, b].
+
+			\begin{definition} [Rectifiability of a curve]
+				We say that the curve is rectifiable if there exists M < $\infty$ such that for any partition $P = \{t_0, t_1, ..., t_N\}$ such that $a=t_0 < t_1 < ... < t_N = b$ of [a,b]:
+
+					$$\sum_{j=1}^N |z(t_j) - z(t_{j-1})| \le M$$
+			\end{definition}
+			\begin{definition} [Length of a curve]
+				The length $L(\gamma)$ of curve, $\gamma$ is the supremum over all partition of the sum:
+
+					$$L(\gamma) = \sup_P \sum_{j=1}^N |z(t_j) - z(t_{j-1})|$$
+
+				or note that $L(\gamma) = \inf_M \{\sum_{j=1}^N |z(t_j) - z(t_{j-1})| \le M\}$. That is the infimum over all M's that satisfy the rectifiability of the curve.
+			\end{definition}
+
+			With these two definitions, one is interested in determining when rectifiability occurs. What conditions on the functions x and y are needed? 
+
+			Suppose F(t) is a complex-valued function defined on [a,b] with a partition P on the interval. We define the \textbf{variation} of F on this \textbf{particular partition} as:
+
+				$$\sum_{j=1}^N |F(t_j) - F(t_{j-1})|$$
+
+			\begin{definition}[Bounded Variation of a Function]
+				The function F is of bounded variation if the variations of F over \textbf{all partitions} are bounded.
+
+					$$\sum_{j=1}^N |F(t_j) - F(t_{j-1})| \le M$$
+
+				for all partitions $a = t_0 < t_1 < ... < t_N = b$.
+			\end{definition}
+
+			By the triangle inequality, if we take refinements of a partition P, then the variation of F on the refinement is greater then or equal to the variation of F on P. Bounded variation is a useful property as we will see in this next theorem because it guarantees curve rectifiability (a necessary \textbf{and} sufficient condition).
+
+			% necessary/sufficient conditions for rectifiability
+			\begin{theorem} [Functions of Bounded Variation Form Rectifiable Curves]
+				A curve parametrized by (x(t), y(t)) with $a \le t \le b$ is rectifiable if and only if x and y are functions of bounded variation.
+			\end{theorem}
+
+			What does it mean to b e a function of bounded variation? It means that a function cannot oscillate too often with very high amplitudes. Examples of bounded variation functions are:
+
+			\begin{enumerate}
+				\item real-valued, monotonic and bounded functions
+				\item differentiable with F' bounded functions
+			\end{enumerate}
+
+			In addition to bounded variation, we also can define the total variation of a function f on [a,x] by:
+
+				$$T_F(a,x) = \sup_P \sum_{j=1}^N |F(t_j) - F(t_{j-1})|$$
+
+			where the sup is taken over partitions of [a,x]. There is also the notion of positive and negative variation when F is real-valued. Note in total and bounded variation, F may be complex-valued, since we take the absolute value.
+
+			The positive and negative variation are:
+
+				$$P_F(a,x) = \sup \sum_+ F(t_j) - F(t_{j-1})$$
+
+			where the sum is over all j such that $F(t_j) \ge F(t_{j-1})$. 
+
+				$$N_F(a,x) = \sum \sum_- -(F(t_j) - F(t_{j-1}))$$
+
+			where the sum takes over all $F(t_j) \le F(t_{j-1})$. That is positive/negative variation occurs over the "monotonic" regions of [a,x]. Positive and negative variation are useful since they require you to only look at a simplified expression. They are related to the function and the total variation as follows:
+
+			\begin{lemma} [BV Functions can be written in form of positive and negative variation (or as total variation)]
+				Suppose F is real-valued and of bounded variation on [a,b]. Then for all $a \le x \le b$:
+					$$F(x) - F(a) = P_F(a,x) - N_F(a,x)$$
+
+				and 
+
+					$$T_F(a,x) = P_F(a,x) + N_F(a,x)$$
+			\end{lemma}
+			\begin{proof}
+			\end{proof}
+
+			% necessary and sufficient conditions of being a BV function
+			Next, we will see that a function of BV is equivalent to saying that the function is the difference of two bounded monotonic functions. We make use of the previous lemma specifically to create those two monotonic functions using the positive and negative variation of the function.
+
+			\begin{theorem} [BV functions are the difference of two increasing bounded functions]
+
+				Real-valued F on [a,b] is of BV if and only if F is the difference of two increasing bounded functions.
+			\end{theorem}
+
+			% BV and continuity and total variation
+			A consequence of this theorem is to see that the total variation of a function and the curve parametrized by a continuous function are closely tied. Namely that the length of the curve between two points, A and B: L(A,B) is equivalent to the $T_F(A,B)$, where F is the curve. Thus $L(A,B)$ is a continuous function of B (and of A). Thus we observe that if a function of BV is continous, then so is its total variation.
+
+			% existence of a derivative
+			Now, we come to a result that guarantees the existence of a derivative. Namely, if a function is of BV, then it is differentiable a.e.
+
+			\begin{theorem} [F being BV means F is differentiable a.e.]
+			\label{thm:bv_funcs_derivatives_exist}
+				If F is of BV on [a,b], then F is differentiable on [a,b] a.e.
+			\end{theorem}
+
+			A corollary gets us close to the FTC, but with an inequality instead of equality. Here, F is increasing and continous, then we get a derivative a.e. In addition, F will be measurable, non-negative.
+
+			\begin{corollary}
+				If F is increasing and continous, then F' exists a.e. F' is also measurable, non-negative and obeys the following inequality:
+
+					$$\int_a^b F'(x) dx \le F(b) - F(a)$$
+
+				If F is bounded, then F' is integrable.
+			\end{corollary}
+
+			In order to prove the theorem, there is a useful Rising-sun Lemma by Riesz.
+
+			\begin{lemma} [Rising-sun lemma]
+			\label{lemma:rising_sun}
+				Suppose G is real-valued and continous on $\mathbb{R}$. 
+
+				E is the set of points x such that:
+
+					$$G(x+h) > G(x)$$
+
+				for some $h = h_x > 0$. That is E is the set of points, where the function G translated to the right by a small amount is greater.
+
+				If E is non-empty, then it must be open and hence can be written as a countable disjoint union of open intervals: $E = \bigcup (a_k, b_k)$. If $(a_k, b_k)$ is a finite interval in this union, then we have that $G(b_k) = G(a_k)$
+			\end{lemma}
+			\begin{proof}
+				We assume E is non-empty.
+
+				% openness of E
+				First, we show that E is open.
+
+				% countable disjoint union
+				Since E is open, then it can be written as a countable disjoint union of open intervals.
+
+				% equality of G at the endpoints of the interval
+				Next, we show the equality of G at the endpoints of the disjoint intervals.
+			\end{proof}
+
+			Now, if we consider the case when $a = a_k$, then we get the following corollary:
+
+			\begin{corollary}
+				G is as defined in the Rising-sun lemma \ref{lemma:rising_sun}. If $a=a_k$, then we have $G(a_k) \le G(b_k)$.
+			\end{corollary}
+		\subsubsection{Why is Bounded Variation Not Enough for Fundamental Theorem of Calculus?}
+			From the results above, we cannot go any further. We will need a stronger notion then Bounded Variation to guarantee the integration of a derivative. 
+
+			The Cantor-lebesgue function is a continuous function that is increasing and of bounded variation, but:
+
+				$$\int_a^b F'(x) dx \neq F(b) - F(a)$$
+
+			The Cantor-Lebesgue function is a sequence of continuous increasing functions $\{F_n\}$ such that:
+
+				$$|F_{n+1}(x) - F_n(x)| \le 2^{-n-1}$$
+
+			$F_n$ converges uniformly to a continuous limit F. Since m(C) = 0 (the measure of the Cantor set is zero), then $F'(x) = 0$ a.e.
+
+			Therefore, a function of bounded variation \textbf{guarantees the existence of a derivative a.e., but not the Fundamental theorem of calculus}. By taking a stronger notion, we will guarantee existence of derivatives a.e., and ALSO the FTC.
+
+		\subsubsection{Absolute Continuity - To Enable Second Fundamental Theorem of Calculus}
+			Absolute continuity will allow us to write:
+
+				$$F(b) - F(a) = \int_a^x F'(x) dx$$
+
+			We define it as:
+
+			\begin{definition} [Absolute continuity]
+				A function F on [a,b] is absolutely continuous if for any $\epsilon > 0$, there exists a $\delta > 0$ such that:
+
+					$$\sum_{k=1}^N |F(b_k) - F(a_k)| < \epsilon$$
+
+				whenever $\sum_{k=1}^N (b_k - a_k) < \delta$.
+			\end{definition}
+
+			What is given by absolute continuity? We here state some properties that relate to BV and continuity that absolute continuity automatically implies.
+
+			\begin{enumerate}
+				\item Absolute continuity implies continuity and uniform continuity
+				\item If F is absolutely continuous on a bounded interval, then it is of BV. In addition its total variation is absolutely continuous
+				\item If F is the antiderivative of an integrable function, then F is absolutely continuous.
+			\end{enumerate}
+
+			Here is a proof for why absolute continuity implies BV:
+
+			% AC -> BV
+			\begin{proof}
+				First, we can see that absolute continuity implies continuity and in fact uniform continuity.
+
+				From the definition of F being absolutely continuous, we can fix an $\epsilon > 0$. Then there exists a $\delta > 0$ such that if $[c, d] \subset [a,b]$, with $d-c < \delta$, then $c = t_0 < t_1 < ... < t_N = d$. Then from the definition of AC, we get:
+
+					$$\sum_{j=1}^N |f(t_j) - f(t_{j-1})| < \epsilon$$
+
+				The total variation of f is less then $\epsilon$. So it is trivial to choose a $\delta$ that works for all $\epsilon > 0$.
+
+				% Why BV?
+				Now, we want to see why this implies BV. We take $\epsilon = 1$. Then we cover our interval [a,b] by at most $M = 2(b-a)/ \delta + 1$ sub-intervals, which all of length $< \delta / 2$. Now we take the closed interval [a, b] and write it as the finite union of these M almost-disjoint intervals:
+
+					$$[a,b] = [s_0, s_1] \cup [s_1, s_2] \cup \hdots \cup [s_{M-1}, s_M]$$
+
+				with $s_0 = a, s_M = b$. Each of these intervals is smaller than $\delta$, and we saw earlier that this implies that the sum of the variations on those intervals is less than $\epsilon$.
+
+				Now the variation of F on [a,b] is upper-bounded by the sum of the variations, which are all less than or equal to $\epsilon$, as long as the sub-intervals are small enough. This is also upper-bounded by M $* \epsilon$ (= M since $\epsilon = 1$ here) since there is exactly M sub-intervals by construction. These M intervals have length $2(b-a)/ \delta + 1 < \infty$, so F is of BV as well.
+			\end{proof}
+
+			This actually implies i) that if F is absolutely continuous, then the total variation ($T_F$) and the positive/negative variation are also absolutely continuous on $[a,b]$. 
+
+			Secondly, it implies that F can be written as a difference of 2 increasing absolutely continuous functions. Since if you have a BV variation, then you can write the function as $P_F + F - N_F$, which is a difference of two increasing absolutely continuous functions.
+
+			Third, if you form an indefinite integral:
+
+				$$F(x) = \int_a^x f(y)dy$$
+
+			with f integrable, then F is absolutely continuous. This leads us to the following lemma about the absolute continuity of the integral.
+
+			\begin{lemma} [Indefinite Integral of an Integrable Function is Absolutely Continuous]
+
+				If f is integrable, and $F(x) := \int_a^x f(y) dy$, then F is absolutely integrable.
+			\end{lemma}
+			\begin{proof}
+				% L1 integrable functions can control their norm by the measure of the set they integrate over
+				Recall that if $g \in L^1$, then $\forall \epsilon > 0$, there exists a $\delta > 0$ such taht $\int_E |g| dx < \epsilon$ if $m(E) < \delta$. That is the L1 norm of an integrable function can be controlled by the measure of teh set they integrate over.
+
+				% take non-overlapping intervals and define the measure of the set E
+				Now, we let $\epsilon > 0$ and $g = |f|$. We take the set $E = \bigcup_{k=1}^N [a_k, b_k]$ as the non-overlapping union of closed intervals in [a,b]. Then we can define the measure of E as: $m(E) = \sum_{k=1}^N (b_k - a_k)$. We define E with such sub-intervals such that $m(E) < \delta$. Now, we can make use of our recalled fact. 
+
+				Now since these intervals are non-overlapping and the corresponding measure is small (i.e. less than $\delta$), the corresponding integral of g over E is:
+
+					$$\int_E |f| dy = \sum_{k=1}^N \int_{a_k}^{b_k} |f(y)| dy < \epsilon$$
+
+				Note that $|F(b_k) - F(a_k)| = |\int_{a_k}^{b_k} f| \le \int_{a_k}^{b_k} |f|$ by the triangle inequality. This then implies that the sum of $|F(b_k) - F(a_k)|$ over the entire sub-interval is controlled by the sum of $\int_{a_k}^{b_k} |f|$.
+
+				Therefore:
+
+					$$\sum_{k=1}^N |F(b_k) - F(a_k)| < \sum_{k=1}^N \int_{a_k}^{b_k} |f| < \epsilon$$
+
+				which implies that F is absolutely continuous.
+			\end{proof}
+
+			Note, that absolute continuity is in essence a necessary condition for the FTC.
+
+			% second fundamental theorem of calculus
+			Finally, we obtain the FTC using absolute continuity as a necessary condition in the following theorem.
+
+			\begin{theorem} [FTC - integrating a derivative]
+			\label{thm:second_ftc}
+				If F is absolutely continuous on [a,b], then F' exists a.e. and is integrable. Moreover:
+
+				$$F(x) - F(a) = \int_a^x F'(y) dy$$
+
+				for all $a \le x \le b$
+
+			\end{theorem}
+
+			\paragraph{The Vitali Covering Lemma To Prove FTC}
+			In order to prove the FTC, we need to remind ourselves of the Vitali covering lemma from integration theory, where we can take a finite collection of open balls in $\mathbb{R}^d$, then there exists a disjoint sub-collection of those balls such that the measure of the sub-collection covers approximately $3^{-d}$ of the measure of the entire collection. 
+
+			We used this to prove the Hardy-Littlewood Maximal theorem, and we can use a variant of this to prove the FTC. We define a variant known as the Vitali covering.
+
+			\begin{definition} [Vitali Covering]
+				For $\mathcal{B} = \{B\}$ a collection of balls is called a Vitali covering of E if for each $\eta > 0$, and $x \in E$, we can find $B \in \mathcal{B}$ with $x \in B$ and $m(B) < \eta$. 
+
+				I.e. every point is covered by arbitrary small balls.
+
+				Note that this collection may be infinite and not necessarily finite.
+			\end{definition}
+
+			We now define a modified Vitali Covering Lemma.
+
+			\begin{lemma}
+				Suppose E is a set of finite measure and $\mathcal{B}$ is a Vitali covering of E. Then for any $\delta > 0$, we can find finitely many balls $B_1, B_2, .., B_N \in \mathcal{B}$ that are \textbf{disjoint} and have the following property:
+
+					$$\sum_{i=1}^N m(B_i) \ge m(E) - \delta$$
+
+				That is, finitely many disjoint balls can cover E up to a $\delta$ difference in measure.
+			\end{lemma}
+			\begin{proof}
+
+			\end{proof} 
+
+			Now, we are ready to prove a consequence of absolute continuity that will show that a zero derivative implies a constant function.
+
+			\begin{theorem} [Absolute Continuity with a zero derivative implies constant function]
+				If F is absolutely continuous on [a,b], then there exists a derivative a.e. Moreover, if $F'(x) = 0$ for a.e. x, then F is constant.
+			\end{theorem}
+			\begin{proof}
+				Enough to show that F(b) = F(a). Assumption states that F'(x) exists a.e. and is zero.
+
+				So we have that there exists a set $E \subset [a,b]$ such that $m(E) = b - a$ full measure such that:
+
+					$$\lim_{x \rightarrow 0} \frac{F(x+h) - F(x)}{h} = 0$$
+
+				for all $x \in E$. The set that this does not happen has measure zero as we have seen from the BV analysis.
+
+
+				% construct Vitali covering of E
+				As a consequence of the above, we have the following. For $\epsilon > 0$, for each $\eta > 0$, we can find an open interval $I = (a_x, b_x) \subset (a, b)$ with $x \in I$ such that:
+
+					$$\frac{|F(b_x) - F(a_x)|}{|b_x - a_x|} \le \epsilon $$
+
+				and $b_x - a_x < \eta$. Note that all of these $\{(a_x, b_x)\}$ form a Vitali covering of E. Do this for every $x \in E$. Now we can make use of the Vitali covering lemma, we can find finitely many disjoint intervals $I_i = (a_i, b_i)$ for i = 1, ..., N, such that:
+
+					$$\sum_{i=1}^N m(I_i) \ge m(E) - \delta = b - a - \delta$$
+
+
+				But note that $F(b_i) - F(a_i) \le \epsilon |b_i - a_i|$ and the fact that these intervals are disjoint and contained in (a,b). Then we can sum over all these disjoint intervals:
+
+					$$\sum_{i=1}^N |F(b_i) - F(a_i)| \le \epsilon (b-a)$$
+
+				Since everyone of these intervals $I_i$ are in (a,b) and open, then we have:
+
+					$$[a,b] - \cup_{i=1}^N I_i = \bigcup_{k=1}^M [\alpha_k, \beta_k]$$
+
+				must be a finite collection of closed intervals that are disjoint. By the earlier argument, we see that:
+
+					$$\sum_{k=1}^M (\beta_k - \alpha_k) = | \bigcup_{k=1}^M [\alpha_k, \beta_k] | \le \delta$$ 
+
+				Thus if $\delta$ is small enough that depends on $\epsilon$, by absolute continuity of F, then we can bound the sum of F evaluated at these endpoints of the subintervals by $\epsilon$. 
+			\end{proof}
+
+			We finally can state the Fundamental Theorem of Calculus that tells us precisely when we can integrate a derivative to obtain the value of the function at the integral endpoints.
+
+			\begin{theorem} [Fundamental Theorem of Calculus 2]
+				Suppose F is absolutely continuous on [a,b]. Then F' exists a.e. and is integrable. Moreover:
+
+					$$F(x) - F(a) = \int_a^x F'(y) dy$$
+
+				for all $a \le x \le b$. By selecting $x = b$, we get that $F(b) - F(a) = \int_a^b F'(y) dy$.
+
+				Conversly if f is integrable on [a,b], then there exists an absolutely continuous function F, such that F'(x) = f(x) a.e. and in fact:
+
+					$$F(x) = \int_a^x f(y) dy$$
+			\end{theorem}
+			\begin{proof}
+				% AC -> BV -> diff of two AC increasing funcs
+				Since F' is integrable by the previous result. Then we define $G(x) = \int_a^x F'(y) dy$, $x \in [a,b]$. So we are integrating an L1 function, so therefore G is absolutely continuous. Then that implies that F is absolutely continuous. By Lebesgue differentiation theorem, we can differentiate G(x):
+
+					$$G'(x) = F'(x),\ a.e.$$
+
+				% show that two AC functions with zero derivative is then a constant function
+				So we have two AC functions with the derivative equal a.e. Then $G'(x) - F'(x) = 0$ a.e. is an absolutely continuous function. Therefore, $F(x) - G(x)$ is constant by the previous theorem.
+
+				Therefore $F(a) - G(a) = F(a)$ (since G(a) = 0 by definition), so $F(x) - F(a) = G(x) = \int_a^x F'(y) dy$.
+
+				% indefinite integrals are AC and then apply Lebesgue differentiation theorem
+				Since we have that $F(x) := \int_a^x f(y) dy$ is absolutely continuous (forming indefinite integral of an L1 function is AC). Then by Lebesgue differentiation theorem, we show that:
+
+					$$F'(x) = f(x)$$
+
+				a.e.
+			\end{proof}
+
+	\subsection{Conclusions Thus Far}
+		We have started out with proving the Lebesgue differentiation theorem. We showed that if a function, f, is L1, then a.e. we have that if you differentiate an integral, then you get the integrand back. This showed us the Fundamental Theorem of Calculus 1 in Lebesgue setting.
+
+		% Lebesgue differentiation theorem
+		Specifically, f(x) is equal to the average over smaller and smaller balls around x. Even stronger, we showed that if you take the limit of the average difference in f(x) and f(y) around smaller and smaller balls that contain x, this limit tends to zero. These points specifically are called Lebesgue points. Here, we do not need that f is an L1 function, but rather just that f is locally integrable.
+
+		% how did we prove this? HLW
+		We utilized the Hardy-LittleWood-Maximal thm. If we use the HLW maximal function and consider the set where this function is bigger then a constant $\alpha$, then the measure of this set is smaller then some constant dependent on dimension, $\alpha$ and the L1 norm of f.
+
+		% covering lemmas
+		We also constructed various covering lemmas that allowed us to approximate the measure of a finite collection of balls with a finite sub-collection of disjoint balls. The approximation is off by a factor of $3^d$. 
+
+		% integrating derivatives
+		Next, we considered how to integrate derivatives. Specificaly, we wanted to determine conditions for the Second Fundamental Theorem of Calculus. When is $\int_a^b F'(y) dy = F(b) - F(a)$ for the largest class of F functions possible. We need i) at least that F' is integrable.
+
+		To ensure that F' is integrable, we introduced functions of BV, which bounds the supremum of the variation of F over all partitions. That is the total variation is bounded by some finite constant M. We then saw that F being of BV is a necessary and sufficient condition for F being written as a difference of 2 bounded and increasing functions (specifically $P_F + F$ and $N_F$). Now to understand functions of BV, simply need to understand properties of bounded increasing functions.
+
+		So when you have a continuous increasing functions, then these functions have:
+
+		\begin{enumerate}
+			\item f is differentiable a.e. on (a,b)
+			\item f' is integrable and $\int_a^b f'(x) dx \le f(b) - f(a)$
+		\end{enumerate}
+
+		where the second point is the FTC but with an inequality. Note that to get our first condition of having F' being integrable we note that for functions of BV, we get: F is differentiable a.e. and specifically F' is L1 and hence integrable. 
+
+		% Absolute continuity
+		Now instead of the inequality, we would like conditions for when equality of $\int_a^b f'(x) dx = f(b) - f(a)$. These class of functions are known as absolutely continuous functions. 
+
+		Then if you're absolutely continuous, then you are i) differentiable a.e. and ii) derivative = 0 implies that function is constant. Then we finally saw that absolutely continuity is a sufficient condition for the Second FTC.
+
+		% now what else is left?
+		Now what else is left? We would like to show that if F is increasing and bounded, then F is differentiable a.e. in (a,b). Note that before we showed this for when F is continuous and bounded. 
+
+	\subsection{Jump Functions and Their Differentiability}
+		We next analyze a class of monotonic functions that are not continuous. This will allow us to show that there exists derivatives a.e. even for non-continuous functions (analagous to Thm \ref{thm:bv_funcs_derivatives_exist}). Specifically, we weaken continuity to a class of increasing bounded functions.
+
+		Note that if $x \in [a,b]$, then $F(x^-) = \lim_{y \rightarrow x_-} F(y)$ and $F(x^+) = \lim_{y \rightarrow x_+} F(y)$, which always exist since F is increasing. We will for convenience define $F(a^-) = F(a)$ and $F(b^+) = F(b)$. If F was continuous at x, then this implies that $F(x^-) = F(x^+)$, otherwise there is a "jump" discontinuity at x: $F(x^-) < F(x^+)$. We will see that there are not too many of these. Namely there are at most countably many of these jump discontinuities for an increasing bounded function.
+
+		\begin{lemma} [Bounded increasing function has at most countable number of discontinuitties]
+
+			If F is a bounded increasing function, then it has at most a countable number of discontinuities.
+		\end{lemma}
+		\begin{proof}
+			If F is discontinuous at $x_0$, then by definition we have that $\lim_{x \rightarrow x_0^-} F(x) = F(x_0^-) < F(x_0^+)$. And if $I_{x_0} = (F(x_0^-), F(x_0^+)) \subset [F(a), F(b)]$. We can pick a rational number in this non-empty open interval $r_{x_0} \in I_{x_0} \cap \mathcal{Q}$ (just intersect our interval with the set of rationals).
+
+			If F is also discontinuous at $y_0 > x_0$ a number greater then our current discontinuity, then since F is increasing, we must have the following:
+
+				$$\lim_{y \rightarrow y_0^+} F(y) = F(y_0^+) > F(x_0^+)$$
+
+			and if $F(y_0^-)$ is the left hand limit, then the two intervals defining the discontinuity for $x_0$ and $y_0$ form disjoint intervals. $(F(x_0^-), F(x_0^+)) \cap (F(y_0^-), F(y_0^+)) = \phi$. Now if we pick one rational $r \in \mathcal{Q}$ in every interval $(F(x^-), F(x^+))$, such that F is discontinuous at x. 
+
+			Then there is a 1-1 mapping from a subset of $\mathcal{Q}$ to the set of discontinuities. Therefore, there is a countable number of discontinuities.
+		\end{proof}
+
+		In the middle of a jump at a discontinuity point, the function does not necessarily have to equal any of its endpoints at $x_n$. So we instead define it as some $\theta_n \alpha_n$, where $\theta_n \in [0,1]$ and $\alpha_n$ is the height of the jump between its left and right limits.
+
+
+
+\end{document}

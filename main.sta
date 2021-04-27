@@ -1,0 +1,14 @@
+\standalonepreambles
+\subpreamble{chapters/lebesgue_measure.tex}
+\usepackage [utf8]{inputenc} \usepackage [T1]{fontenc} \usepackage {url} \usepackage {booktabs} \usepackage {amsfonts} \usepackage {nicefrac} \usepackage {microtype} \usepackage {lipsum}\usepackage {amsmath}\usepackage {amsthm}\usepackage {hyperref}\usepackage {import}\usepackage [subpreambles=true]{standalone}\hypersetup {colorlinks=true, linktoc=all, linkcolor=blue, }\theoremstyle {definition}\newtheorem {definition}{Definition}[section]\theoremstyle {remark}\newtheorem *{remark}{Remark}\theoremstyle {lemma}\newtheorem *{lemma}{Lemma}\theoremstyle {theorem}\newtheorem *{theorem}{Theorem}\theoremstyle {corollary}\newtheorem *{corollary}{Corollary}\theoremstyle {property}\newtheorem *{property}{Property}\usepackage [subpreambles=true]{standalone}\usepackage {import}
+\endsubpreamble
+\subpreamble{chapters/lebesgue_integration.tex}
+\usepackage [utf8]{inputenc} \usepackage [T1]{fontenc} \usepackage {url} \usepackage {booktabs} \usepackage {amsfonts} \usepackage {nicefrac} \usepackage {microtype} \usepackage {lipsum}\usepackage {amsmath}\usepackage {amsthm}\usepackage {hyperref}\usepackage {import}\usepackage [subpreambles=true]{standalone}\hypersetup {colorlinks=true, linktoc=all, linkcolor=blue, }\usepackage [subpreambles=true]{standalone}\usepackage {import}
+\endsubpreamble
+\subpreamble{chapters/lebesgue_differentiation.tex}
+\usepackage [utf8]{inputenc} \usepackage [T1]{fontenc} \usepackage {url} \usepackage {booktabs} \usepackage {amsfonts} \usepackage {nicefrac} \usepackage {microtype} \usepackage {lipsum}\usepackage {amsmath}\usepackage {amsthm}\usepackage {hyperref}\usepackage {import}\usepackage [subpreambles=true]{standalone}\hypersetup {colorlinks=true, linktoc=all, linkcolor=blue, }\usepackage [subpreambles=true]{standalone}\usepackage {import}
+\endsubpreamble
+\subpreamble{chapters/hilbert_spaces.tex}
+\usepackage [utf8]{inputenc} \usepackage [T1]{fontenc} \usepackage {url} \usepackage {booktabs} \usepackage {amsfonts} \usepackage {nicefrac} \usepackage {microtype} \usepackage {lipsum}\usepackage {amsmath}\usepackage {amsthm}\usepackage {hyperref}\usepackage {import}\usepackage [subpreambles=true]{standalone}\hypersetup {colorlinks=true, linktoc=all, linkcolor=blue, }\usepackage [subpreambles=true]{standalone}\usepackage {import}
+\endsubpreamble
+\endstandalonepreambles

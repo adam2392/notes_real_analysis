@@ -1,0 +1,75 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}Lebesgue Measure}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Lebesgue Outer (Exterior) Measure}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Invariance Properties of the Lebesgue Measure}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Lebesgue Measurable Functions}{5}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}Defining Measurability on Functions}{5}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Approximation of Functions with Pointwise Functions}{6}{subsubsection.2.3.2}
+\contentsline {paragraph}{Approximating Non-negative Measurable Functions}{6}{section*.2}
+\contentsline {paragraph}{Approximating Measurable Functions}{7}{section*.3}
+\contentsline {subsubsection}{\numberline {2.3.3}Approximation of Functions with Step Functions}{7}{subsubsection.2.3.3}
+\contentsline {subsubsection}{\numberline {2.3.4}Approximation of Functions with Polynomial Functions}{7}{subsubsection.2.3.4}
+\contentsline {subsubsection}{\numberline {2.3.5}Littlewood Principles}{8}{subsubsection.2.3.5}
+\contentsline {section}{\numberline {3}Lebesgue Integration}{10}{section.3}
+\contentsline {subsection}{\numberline {3.1}Integration of Simple Functions}{10}{subsection.3.1}
+\contentsline {paragraph}{The Lebesgue integral of simple functions}{10}{section*.4}
+\contentsline {paragraph}{Properties of Simple Function Lebesgue Integral}{10}{section*.5}
+\contentsline {subsection}{\numberline {3.2}Integration of Bounded Functions of Finite Measure}{11}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Integration of Non-negative Functions}{11}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Convergence Theorems}{12}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}General Lebesgue Integrable Functions}{14}{subsection.3.5}
+\contentsline {paragraph}{Properties of the General Lebesgue Integral}{14}{section*.6}
+\contentsline {subsection}{\numberline {3.6}Lp Spaces}{15}{subsection.3.6}
+\contentsline {subsubsection}{\numberline {3.6.1}L1 spaces}{15}{subsubsection.3.6.1}
+\contentsline {subsubsection}{\numberline {3.6.2}Density Properties of the L1 space}{16}{subsubsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.3}Invariance Properties of the Lebesgue Integral}{17}{subsubsection.3.6.3}
+\contentsline {subsection}{\numberline {3.7}Fubini's Theorem}{18}{subsection.3.7}
+\contentsline {subsubsection}{\numberline {3.7.1}Fubini-Tonelli Theorem}{19}{subsubsection.3.7.1}
+\contentsline {section}{\numberline {4}Differentiation of Lebesgue Integrals}{19}{section.4}
+\contentsline {subsection}{\numberline {4.1}Mean Value Theorem}{20}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Differentiation of the Lebesgue Integral}{21}{subsection.4.2}
+\contentsline {paragraph}{The averaging problem in differentiation of integrals}{21}{section*.7}
+\contentsline {subsection}{\numberline {4.3}Covering Lemma To Demonstrate Weak-L1 Property}{22}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Hardy-Littlewood Maximal Function and Weak-L1 Functions}{23}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Lebesgue Differentiation Theorem}{25}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}Good Kernels and Approximating the Identity}{26}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}Differentiation of Functions}{26}{subsection.4.7}
+\contentsline {subsubsection}{\numberline {4.7.1}Bounded Variation - To Enable Differentiability Almost Everywhere}{27}{subsubsection.4.7.1}
+\contentsline {subsubsection}{\numberline {4.7.2}Why is Bounded Variation Not Enough for Fundamental Theorem of Calculus?}{30}{subsubsection.4.7.2}
+\contentsline {subsubsection}{\numberline {4.7.3}Absolute Continuity - To Enable Second Fundamental Theorem of Calculus}{30}{subsubsection.4.7.3}
+\contentsline {paragraph}{The Vitali Covering Lemma To Prove FTC}{33}{section*.8}
+\contentsline {subsection}{\numberline {4.8}Conclusions Thus Far}{35}{subsection.4.8}
+\contentsline {subsection}{\numberline {4.9}Jump Functions and Their Differentiability}{36}{subsection.4.9}
+\contentsline {section}{\numberline {5}Hilbert Spaces}{37}{section.5}
+\contentsline {subsection}{\numberline {5.1}The L2 space: square integrable functions}{37}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}L2 to Hilbert Spaces}{40}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}Orthogonality in Hilbert Spaces}{40}{subsubsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2}Unitary Mappings in Hilbert Spaces}{41}{subsubsection.5.2.2}
+\contentsline {subsection}{\numberline {5.3}Fourier Series and Fatou's Theorem}{43}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Closed Hilbert Subspaces and Orthogonal Projections}{45}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.5}Linear Transformations on Hilbert Spaces}{47}{subsection.5.5}
+\contentsline {subsection}{\numberline {5.6}Riesz Representation Theorem}{48}{subsection.5.6}
+\contentsline {subsubsection}{\numberline {5.6.1}Adjoints}{49}{subsubsection.5.6.1}
+\contentsline {section}{\numberline {6}Sample Space and Sigma-Fields}{49}{section.6}
+\contentsline {subsection}{\numberline {6.1}Sample Space}{49}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Sigma-Fields}{49}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}General Set Theory Closure Properties}{49}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}General Definitions}{50}{subsubsection.6.2.2}
+\contentsline {paragraph}{Fields}{50}{section*.9}
+\contentsline {paragraph}{Monotone Classes (MC)}{50}{section*.10}
+\contentsline {paragraph}{$\pi $ Systems}{50}{section*.11}
+\contentsline {paragraph}{$\lambda $ Systems}{51}{section*.12}
+\contentsline {subsubsection}{\numberline {6.2.3}Generating Fields, MC, Sigma-Fields}{51}{subsubsection.6.2.3}
+\contentsline {subsubsection}{\numberline {6.2.4}Good Sets Argument}{51}{subsubsection.6.2.4}
+\contentsline {section}{\numberline {7}Probability Measure}{51}{section.7}
+\contentsline {subsection}{\numberline {7.1}Introduction}{51}{subsection.7.1}
+\contentsline {subsubsection}{\numberline {7.1.1}Axioms of Probability Theory}{52}{subsubsection.7.1.1}
+\contentsline {paragraph}{Basic Properties of Probability Measure}{52}{section*.13}
+\contentsline {subsubsection}{\numberline {7.1.2}Probability Measures on Fields and Sigma-Fields}{52}{subsubsection.7.1.2}
+\contentsline {paragraph}{Traces of a field, and $\sigma $-fields}{53}{section*.14}
+\contentsline {subsection}{\numberline {7.2}Uniform Probability on (0, 1]}{53}{subsection.7.2}
+\contentsline {subsubsection}{\numberline {7.2.1}Sample Space}{53}{subsubsection.7.2.1}
+\contentsline {subsubsection}{\numberline {7.2.2}$\sigma $-field}{53}{subsubsection.7.2.2}
+\contentsline {subsection}{\numberline {7.3}Extension Theorem}{54}{subsection.7.3}
+\contentsline {subsubsection}{\numberline {7.3.1}Probability Measures}{54}{subsubsection.7.3.1}
+\contentsline {paragraph}{Properties of class M}{54}{section*.15}

@@ -1,0 +1,314 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+
+\usepackage{import}
+\usepackage[subpreambles=true]{standalone}
+
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+% \theoremstyle{definition}
+% \newtheorem{definition}{Definition}[section]
+
+% \theoremstyle{remark}
+% \newtheorem*{remark}{Remark}
+
+% \theoremstyle{lemma}
+% \newtheorem*{lemma}{Lemma}
+
+% \theoremstyle{theorem}
+% \newtheorem*{theorem}{Theorem}
+
+% \theoremstyle{corollary}
+% \newtheorem*{corollary}{Corollary}
+
+\theoremstyle{proposition}
+\newtheorem*{proposition}{Proposition}
+
+\title{Real Analysis (Lebesgue) and Basic Probability Theory}
+
+\author{
+  Adam Li, \\
+  Department of Applied Mathematics \& Statistics, \\
+  Department of Biomedical Engineering, \\
+  Johns Hopkins University, \\
+  Baltimore, MD, 21218 \\
+  \texttt{ali39@jhu.edu / adam2392@gmail.com}
+}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+	In these notes, I go over important results in Lebesgue measure theory, Lebesgue integration and then leading up to the theory related in Probability Measure Theory.
+
+	I start off with some important notes and results in constructing the Lebesgue measure, exploring the notion of measurability on subsets of the real line. 
+
+% lebesgue measure
+\subimport{chapters/}{lebesgue_measure}
+
+% Lebesgue integration
+\subimport{chapters/}{lebesgue_integration}
+
+% differentiation
+\subimport{chapters/}{lebesgue_differentiation}
+
+\subimport{chapters/}{hilbert_spaces}
+
+\section{Sample Space and Sigma-Fields}
+	\subsection{Sample Space}
+
+		$\Omega$ is our sample space that is a nonempty set of elements, called points.
+
+	\subsection{Sigma-Fields}
+		\subsubsection{General Set Theory Closure Properties}
+
+			Note:
+
+			This is the difference:
+
+				$$E \ F = E \cap F^c$$
+
+			Whereas this is the symmetric difference:
+
+				$$E - F = (E \ F) \cup (F \ E)$$
+
+
+			In Chung's Prob Theory book, there are certain closure properties that any nonempty collection $\mathcal{A}$ of subsets of $\Omega$ may have:
+
+			\begin{enumerate}
+				\item Closure under complementation: $E \in \mathcal{A}$ implies that $E^c \in \mathcal{A}$
+				\item Closure under binary union:
+				\item Closure under binary intersection:
+				\item Closure under finite union:
+				\item Closure under finite intersection:
+				\item Closure under countable increasing union:
+				\item Closure under countable decreasing intersection:
+				\item Closure under countable union:
+				\item Closure under countable intersection:
+				\item Closure under proper set differences:
+			\end{enumerate}
+
+		\subsubsection{General Definitions}
+			\paragraph{Fields}
+
+			% fields
+			\begin{definition}
+				A field, F is a subset of $\Omega$ that is i) closed under complementation and ii) closed under binary union.
+			\end{definition}
+
+			\begin{corollary}
+				A field, F is closed under binary intersection, finite union and finite intersection.
+			\end{corollary}
+			\begin{proof}
+				To show that is is closed under binary intersection, we use De Morgan's Law.
+
+				For $D, E \in F$, then $D^c, E^c \in F$ by closure under complementation. $D \cup E \in F$, so $(D \cup E)^c = D^c \cap E^c \in F$.
+
+				To show that it is closed under finite union and finite intersection, one utilizes induction. It is shown for binary union/intersection, so one needs to then assume it is closed under k-1 union/intersection and prove that it is also closed under k union/intersection.
+			\end{proof}
+
+			\paragraph{Monotone Classes (MC)}
+			Monotone classes are sets that obey the closure under countable increasing/decreasing union/intersections. That is each set is either monotonically increasing, or decreasing. Hence the name monotone.
+
+			% Field-MC Theorem
+			The MC theorem is a way of proving something is a $\sigma$-field besides it's original definition. One can start with a field and show that it is also a MC, and then that field is a $\sigma$-field!
+
+			\begin{theorem}
+			\label{thm:field_mc_thm}
+				TBD
+			\end{theorem}
+
+			% pi systems
+			\paragraph{$\pi$ Systems}
+			$\pi$ systems are a weaker notion then fields. They are a class of subsets of $\Omega$ that are closed under finite intersection (i.e. closed under binary intersection). 
+
+			Note that a field also has closure under complementation, which allows them to also have closure under finite unions.
+
+			% lambda systems
+			\paragraph{$\lambda$ Systems}
+			$\lambda$ systems are a stronger notion then Monotone classes. 
+
+			They contain the whole sample space, $\Omega$, are closed under proper set differences and are closed under countable increasing unions. 
+
+			Note that MC are only closed under monotonically increasing/decreasing union/intersections, whereas a $\lambda$ system is closed under general countable increasing unions.
+
+			% Dynkins pi-lambda theorem
+			To connect $\pi$ and $\lambda$ systems to our set of interest, the $\sigma$-field, we can utilize another theorem that states if a $\pi$ system is within a $\lambda$ system, then the $\sigma$-field generated by the $\pi$ system is within the $\lambda$ system.
+
+			\begin{theorem}
+			\label{thm:dynkins_pi_lambda_thm}
+				TBD
+			\end{theorem}
+
+			\subsubsection{Generating Fields, MC, Sigma-Fields}
+
+
+			\subsubsection{Good Sets Argument}
+\section{Probability Measure}
+	\subsection{Introduction}
+		% Probability measure on field
+		\begin{definition}
+		A probability measure on a field, $\mathcal{F}$ is a set function that has the properties for a probability measure on a $\sigma$-field. Countable additivity need only hold if the countable disjoint union $\sum_{j=1}^\infty E_j$ of sets $E_j \in \mathcal{F}$ belongs to $\mathcal{F}$.
+
+
+		These are the
+			\begin{enumerate}
+				\item positivity: $\forall E \in \mathcal{F}$, we have P(E) $\ge 0$
+				\item countable additivity: If $\{E_j\}$ is a countable collection of pairwise disjoint sets in $\mathcal{F}$, then we get: 
+					$$P(\bigcup_{j=1}^\infty E_j) = \sum_j P(E_j)$$
+				\item unitary: $P(\Omega) = 1$
+			\end{enumerate}
+		\end{definition}
+
+		% preprobability measure on field
+		\begin{definition}
+			A set function like in a probability measure that has finite additivity instead of countable additivity.
+		\end{definition}
+
+		Next, we can talk about traces of $\sigma$-fields. Traces are usually defined on sub-sets of the sample space, $\Omega$. So we say $\mathcal{F}$ is a $\sigma$-field of subsets of $\Omega$. Let $\Omega_0 \subset \Omega$, that need not belong to $\mathcal{F}$, then we can define the trace of the original $\sigma$-field:
+
+			$$\mathcal{F}_0 := \mathcal{F} \cap \Omega_0$$
+
+		which is a $\sigma$-field of subsets of $\Omega_0$. 
+
+		\subsubsection{Axioms of Probability Theory}
+			There are three main accepted axioms of probability theory:
+
+			\begin{enumerate}
+				\item positivity: $\forall E \in \mathcal{F}: P(E) \ge 0$
+				\item countable additivity for pairwise disjoint sets: $P(\bigcup_j E_j) = \sum_j P(E_j)$
+				\item normalization: $P(\Omega) = 1$
+			\end{enumerate}
+
+			Note that uncountable additivity would not be well defined because i) there is no notion of an uncountable sum and ii) it would imply that all events have probability zero.
+
+			\paragraph{Basic Properties of Probability Measure}
+
+				1. Upper-bounded by 1
+				2. $P(\Phi) = 0$
+				3. $P(E^c) = 1 - P(E)$
+				4. 
+				5. Monotonicity: If $E \subset F$, then $P(E) = P(F) - P(F\ E) \le P(F)$
+				6. Monotone sequential property: If $E_n \rightarrow E$ from below/above, then $P(E_n) \rightarrow P(E)$ 
+				7. Boole's Inequality (countable sub-additivity): $P(\bigcup_j E_j) \le \sum_j P(E_j)$
+
+			Boole's inequality is also known as countable sub-additivity; note that it does not require any disjointness on the sets.
+
+		\subsubsection{Probability Measures on Fields and Sigma-Fields}
+			Before analyzing the probability measures on a $\sigma$-field, we first look at how things change if we only define probability measures on a field. First note that countable additivity need not hold anymore since only $\sigma$-fields are closed under countable unions, while fields are simply closed under \textbf{finite} unions.
+
+			% prepm - otw known as a charge of a field
+			\begin{definition}
+				A pre-probability measure (prepm) is a probability measure, but instead of countable additivity, we have finite additivity.
+			\end{definition}
+
+			How can one extend a prepm on a field to a probability measure on that field? Using the following Lemma, one can extend a weaker notion of a prepm into a pm.
+
+			% prepm \rightarrow pm on a field
+			\begin{lemma}
+			\label{lemma:prepm_on_field}
+				Suppose $\mathcal{F}$ is a field and P is a pre-pm on $\mathcal{F}$. Then the following are equivalent:
+
+				i) P is a pm. on the field, $\mathcal{F}$
+				ii) Monotone sequential continuity from above (MSCA) at $\Phi$: $A_n \rightarrow \Phi, A_n \in \mathcal{F}$, then $P(A_n) \rightarrow 0$
+				iii) MSCA at general A:
+				iv) Monotone sequential continuity from below (MSCB):
+				v) countable additivity: 
+
+				Note that countable additivity is part of the pm definition! But MSCA at $\Phi$, MSCA and MSCB are ways of taking a prepm and turning it into a pm without directly assuming countable additivity.
+
+				ii) implies i).
+				ii) implies iii) via closure under complementation.
+				iii) implies iv) by constructing disjoint unions from increasing unions (and vice versa)
+				iv) implies v) by definition of the pm.
+			\end{lemma}
+
+			This is interesting because by the "Extension Theorem", one can uniquely and always extend a pm on a field to a pm on a $\sigma$-field. 
+
+			\paragraph{Traces of a field, and $\sigma$-fields} This is the "process" of tracing down a field to a subset. Can we go from $(\Omega, \mathcal{F}, P)$ to $(\Omega_0, \mathcal{F}_0, P_0)$. To get $\mathcal{F}_0$, you can simply take the intersection of subsets of the original field, $\mathcal{F}$ with the subset of the sample space, $\Omega_0$:
+
+				$$\mathcal{F}_0 := \{F \cap \Omega_0 : F \in \mathcal{F} \}$$
+
+			Note that $\mathcal{F}_0$ is a $\sigma$-field of the subsets of $\Omega_0$ and is called the \textbf{trace} of $\mathcal{F}$. 
+
+			% trace of a generating sigma-field
+			Remember we can "generate" $\sigma$-fields, and so we can also trace the sets that generate these $\sigma$-fields.
+
+			% uniform probability measure - lebesgue measure
+			Now, we want to define a probability measure on the sample space and $\sigma$-field. We want to define a set function P on $\mathcal{B}_0$, by setting this:
+
+				$$P(\sum_{i=1}^n (a_i, b_i]) := \sum_{i=1}^n (b_i - a_i)$$
+
+			% define pre-pm on the Borel field
+			This setup ensures that probability obeys our intuition on the unit interval and also makes P well-defined. In addition, it obeys the positivity, unitary axioms and is finitely additive. With finite-additivity, P is a pre-pm on the field $\mathcal{B}_0$.
+
+			Next, we want to show that P is a full pm on the field. To do that, all we need to do is check one of the conditions in \ref{lemma:prepm_on_field}.
+
+			% summarize
+			So, P is a pm on a the field, $\mathcal{B}_0$. P will extend uniquely to a probability measure on $\mathcal{B}$ by the Extension Theorem.
+
+	\subsection{Uniform Probability on (0, 1]}
+		Now that we have defined sample spaces, Borel (sigma) fields, and probability measures, then we want to define the probability density that occurs on the unit interval. We start by building the probability measure on a sub-set of the sigma-field and then "extend" this upwards in size.
+
+		\subsubsection{Sample Space}
+			% defined sample space
+			Our sample space is defined on the unit interval.
+				$$\Omega = (0, 1]$$
+
+		\subsubsection{$\sigma$-field}
+			% Borel-field on (0, 1]
+			What is our Borel field for $\mathcal{F}$? Should we use the total $\sigma$-field? No this ends up being too large of a field. Some remarks on the Borel $\sigma$-field.
+
+			\begin{enumerate}
+				\item It contains the set of Normal numbers defined by the Rademacher functions
+				\item It contains the open sets in (0, 1]. 
+
+			\end{enumerate}
+
+			Note on Rademacher functions and the set of "normal numbers":
+
+			N is the set of normal numbers, where $s_n(\omega)$ is the sum of the first n Rademacher functions. $\omega$ is a point that lies in N if and only if $\lim_n n^{-1} s_n(\omega) = 0$. 
+
+	\subsection{Extension Theorem}
+		The extension theorem states that a probability measure on a field has a unique extension to the generated $\sigma$-field. This is useful because it allows us to define probability measures on fields, and then automatically extend them and know that the extension is unique! 
+
+		\subsubsection{Probability Measures}
+			% defining the introduction of pm on sigma-field
+			The set function, P that we want to be a pm on the $\sigma(F_0)$ can be perhaps measured using our notion of the outer (exterior) measure.
+
+				$$P^*(A) = \inf \sum_n P(A_n))$$
+
+			By taking an infimum over all countable sequences of the $\mathcal{F}_0$ sets, where the sequence of sets form a covering of A. The measure really can be thought of here as the "volume" of A. Now, we want this set function to obey the rules of probability measures in such a way:
+
+				$$P^*(A) = 1 - P^*(A^c)$$
+
+			and
+
+				$$P^*(A) + P^*(A^c) = 1$$
+
+			In order to make this work, people figured out that we can impose the following requirement on $P^*$:
+
+				$$P^*(A \cap E) + P^*(A^c \cap E) = P^*(E)$$
+
+			holds for every set E. We will call \textbf{M} the class of such sets with the above properties.
+
+			% properties
+			\paragraph{Properties of class M}
+\end{document}

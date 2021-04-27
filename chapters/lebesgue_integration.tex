@@ -1,0 +1,446 @@
+\documentclass[class=article, crop=false]{standalone}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage[subpreambles=true]{standalone}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+% \theoremstyle{definition}
+% \newtheorem{definition}{Definition}[section]
+
+% \theoremstyle{remark}
+% \newtheorem*{remark}{Remark}
+
+% \theoremstyle{lemma}
+% \newtheorem*{lemma}{Lemma}
+
+% \theoremstyle{theorem}
+% \newtheorem*{theorem}{Theorem}
+
+% \theoremstyle{corollary}
+% \newtheorem*{corollary}{Corollary}
+
+% \theoremstyle{property}
+% \newtheorem*{property}{Property}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\begin{document}
+
+\section{Lebesgue Integration}
+	Lebesgue integration is a generalization of Riemann integration. Lebesgue integration can be established in increasing generality:
+
+	\begin{enumerate}
+		\item simple functions
+		\item bounded functions on support of finite measure
+		\item non-negative functions
+		\item integrable functions
+	\end{enumerate}
+	\subsection{Integration of Simple Functions}
+		Simple functions are just finite linear combinations of characteristic functions of measurable sets with finite measure. That is:
+
+			$$\psi(x) = \sum_{k=1}^N a_k \chi E_k(x)$$
+
+		Since there are different ways of writing this sum, one can define the \textbf{canonical} form that is the \textbf{unique} decomposiiton with $a_k$ distinct and non-zero with disjoint $E_k$.
+
+		\paragraph{The Lebesgue integral of simple functions}
+
+		Now, we can define the Lebesgue integral of $\psi$ as:
+
+			$$\int_{\mathbb{R}^d} \psi(x) dx = \sum_{k=1}^M c_k m(F_k)$$
+
+		where $c_k$ are the coefficient defined in the simple function and $m(F_k)$ is the measure of the disjoint subset indexed by k.
+
+		\paragraph{Properties of Simple Function Lebesgue Integral}
+
+			\begin{enumerate}
+				\item independence of representation
+				\item linearity of simple functions
+				\item additivity of disjoint subsets
+				\item monotonicity of simple functions
+				\item triangle inequality of simple functions
+			\end{enumerate}
+	\subsection{Integration of Bounded Functions of Finite Measure}
+		Note that we are able to approximate a function, f that is bounded by M and supported on a measurable set E with $\{\psi_n\}$ of simple functions. Each of these simple functions in turn are bounded by M and supported on E. 
+
+		\begin{definition} [Lebesuge integral for bounded functions]
+			For a bounded function that is supported on a set of finite measure, the Lebesgue integral is:
+
+			$$\int f(x) dx = \lim_{n\rightarrow\infty} \psi_n(x) dx$$
+
+			Where $\psi_n$ are a sequence of simple functions that are bounded in absolute value and supported on the support of f and converges uniformly to f(x) for a.e. x.
+		\end{definition}
+
+		Compared to simple functions and their Lebesgue integral, bounded functions have all the same properties except for the independence of representation.
+
+		% important lemma to define integrals for class of bounded functions
+		\begin{lemma}
+			f is a bounded function supported on E of finite measure. If $\{\psi_n\}$ is any sequence of simple functions bounded by M, supported on E and converges to f for a.e. x, then:
+
+			i) The limit $\lim_{n\rightarrow\infty} \int \psi_n$ exists
+
+			ii) If f = 0 a.e., then the limit of the integral equals 0.
+		\end{lemma}
+
+		See below for the bounded convergence theorem that applies to these class of functions.
+	\subsection{Integration of Non-negative Functions}
+		Next, we remove the constraint of bounded functions and consider non-negative functions, which may be extended-valued.
+
+		\begin{definition} [Lebesuge integral for non-negative functions]
+			For a bounded function that is supported on a set of finite measure, the Lebesgue integral is:
+
+			$$\int f(x) dx = \sup_g \int g(x) dx$$
+
+			Where g is the set of all measurable functions $0 \le g \le f$, with g being bounded, and supported on set of finite measure.
+
+			The supremum may either be finite or infinite. If it is finite then we say that \textbf{f is Lebesgue integrable}.
+		\end{definition}
+
+		This definition of Lebesgue integrability satisfies linearity, additivity, monotonicity.
+	\subsection{Convergence Theorems}
+		Convergence theorems in Lebesgue integration theory help us define sufficient and/or necessary conditions for exchanging the integral sign and a limit, which are important in other topics.
+
+		% bounded convergence
+		\begin{theorem} [Bounded convergence theorem]
+		\label{thm:bounded_conv}
+			Suppose that $\{f_n\}$ is a sequence of measurable functions that are all bounded by M and are supported on a set E of finite measure and $f_n(x) \rightarrow f(x)$ a.e. on x as $n \rightarrow \infty$. Then f is measurable, bounded, supported on E for a.e. x and 
+
+			$$\int |f_n - f| \rightarrow 0 \text{ as } n\rightarrow\infty$$
+		\end{theorem}
+		\begin{proof}
+			% utilize triangle inequality 
+			From the assumptions, we see that f is bounded by M a.e. and vanishes outside E, except on set of measure zero. By the triangle inequality for the integral implies that is suffices to prove that $\int |f_n - f| \rightarrow 0$. 
+
+			$$| \int f_n - f | = | \int f_n - \int f| \le \int |f_n - f|$$
+
+			By linearity of the integral. So if we prove the greater value goes to zero, then the lesser value must also go to zero by positivity of the integral. 
+
+			% decompose the measurable set E into a arbitrarily close closed set A_epsilon
+			By Egorov's theorem, we can construct a closed set, $A_\epsilon \subset E$, such that, $m(E - A_\epsilon) \le \epsilon$ with $f_n \rightarrow f$ uniformly on this set. 
+
+			% bound different parts of the integral
+			Next we want to upper bound the integral, $\int |f_n - f|$ and show that the upper bound depends on arbitrary $\epsilon$. We do this by decomposing the integrand into two disjoint sets, $A_\epsilon$ and $E - A_\epsilon$. 
+
+			\begin{align}
+				\int_E |f_n - f| = \int_{A_\epsilon} |f_n -f| + \int_{E - A_\epsilon} | f_n - f| \\
+				= m(A_\epsilon) |f_n - f| + m(E - A_\epsilon) |f_n - f| \\
+				\le m(E) \epsilon + \epsilon 2 M
+			\end{align}
+
+			Since $\epsilon$ is arbitrary, M is finite and E has finite measure, then the integral in question must be zero.
+		\end{proof}
+
+		% no assumptions on the function
+		What if we want no assumptions? How do the limits of integrals compare to the integrals of limits always? Fatou's Lemma tells us the inequality. If we simply assume non-neagtive functions without boundedness, we get Fatou's lemma. It can be extended to the monotone convergence theorem, if we assume convergence and a monotonic sequence of functions.
+
+		% Fatou's lemma for non-negative functions
+		\begin{theorem} [Fatou's Lemma]
+		\label{thm:fatous_lemma}
+			Suppose $\{f_n\}$ is sequence of measurable non-negative functions. If $\lim_{n\rightarrow\infty} f_n(x) = f(x)$ for a.e. x, then:
+
+				$$\int f \le \liminf_{n\rightarrow\infty} \int f_n$$
+
+			This provides a general bound on taking the liminf to the outside of the integral. 
+		\end{theorem}
+		\begin{proof}
+			% setup a lower bound to f and
+			% set up a sequence that converges to the lower bound function
+			If we have $0 \le g \le f$, for some g that is bounded and supported on a set of finite measure. We can set up a sequence of functions $g_n(x) = min(g(x), f_n(x))$, then $g_n$ is measurable, supported on E and $g_n \rightarrow g$ a.e.
+
+			% utilize the bounded convergence theorem
+			We can now use the bounded convergence theorem \ref{thm:bounded_conv}, which gives us: $\int g_n \rightarrow \int g$. Since we have the $g_n$ sequence being a lower bound of the $f_n$ sequence by construction, we have that their integrals are bounded by monotonicity:
+
+				$$\int g_n \le \int f_n$$
+
+			and so we have: $\int g_n = \int g \le \int f_n \le \liminf_{n\rightarrow\infty} \int f_n$. Now, by taking the supremum over g, we have the desired result.
+		\end{proof}
+
+		Note it also bounds the limsup since that is bigger. It is also powerful because it does not even assume existence of the limit of the integral. Fatou's lemma will be useful in proving the Monotone convergence theorem, which is another useful theorem for conditions when one can switch the integrand and the limit.
+
+		% monotone convergence
+		\begin{theorem} [Monotone Convergence Theorem]
+		\label{thm:monotone_conv}
+			If $\{f_n\}$ are a sequence of non-negative functions, they converge to $f$ and are a monotonic sequence, then $\lim_{n\rightarrow\infty} \int f_n = \int f$.
+
+			Note: a monotonic sequence is where $f_n(x) \le f_{n+1}(x)$. 
+		\end{theorem}	
+
+		Now, what can we say about the integral of an infinite series? Ideally, we would have a theorem that tells us the conditions when we can switch the summation and the integral sign. This corrollary tells us that.
+
+		% non-negative summation
+		\begin{corollary}
+			Suppose $a_k(x) \ge 0$ are a sequence of measurable functions. Then $\int \sum_{k=1}^\infty a_k(x) dx = \sum_{k=1}^\infty \int a_k(x) dx$
+		\end{corollary}
+
+		\begin{lemma}
+			Suppose we have a non-negative function, f (i.e. $f \ge 0$), that is measurable. In addition, there are a sequence of measurable functions $\{f_n\}$ with $f_n(x) \le f(x)$ and $f_n(x) \rightarrow f(x)$ converges for almost every x (i.e. except for $x \in E$ with measure zero). 
+
+			Then we have that $\lim_{n\rightarrow\infty} \int f_n = \int f$.
+		\end{lemma}
+
+		% dominated convergence theorem
+		\begin{theorem} [Dominated Convergence Theorem]
+		\label{thm:dominated_convergence}
+			Suppose $\{f_n\}$ is a sequence of measurable functions such that $f_n(x) \rightarrow f(x)$ a.e. x as n tends to infinity. If we have an integrable function that upperbounds the absolute value of the sequence of $f_n$ functions (hence "dominated"), then we can interchange the integrand and limit signs. That is if $|f_n(x)| \le g(x)$ where g is integrable, then 
+
+				$$\int | f_n - f | \rightarrow 0$$
+
+			and by triangle inequality:
+
+				$$\int f_n \rightarrow \int f$$
+		\end{theorem}
+		\begin{proof}
+
+		\end{proof}
+	\subsection{General Lebesgue Integrable Functions}
+		We can integrate simple functions, non-negative functions, and bounded functions. We have the following general definition for Lebesgue integrability:
+
+		\begin{definition}
+		If $f: \mathbb{R}^d \rightarrow$ $[-\infty, \infty]$ is measurable, then it is Lebesgue integrable if $|f|$ is integrable:
+
+			$$\int |f(x)| dx = \sup_g \int g(x) dx < \infty$$
+
+		where g is the set of all measurable functions $0 \le g \le f$, with g being bounded and supported on a set of finite measure.
+		\end{definition}
+
+		\paragraph{Properties of the General Lebesgue Integral}
+		The general integral is linear, additive, monotonic and satisfies the triangle inequality. These are important properties as we begin to speak about Lebesgue integration in vector spaces.
+
+		Here the dominated convergence theorem is a useful outcome of general Lebesgue integration.
+
+		This next proposition allows us to extend some useful properties of integrable function on $\mathbb{R}^d$. The first part of the lemma tells us that there is always a set of finite measure that outside this set, the integral of the absolute value of the function is arbitrarily small. The second condition tells us about absolute continuity (note the $\delta$, $\epsilon$ argument similar to continuity arguments).
+
+		\begin{lemma} [Absolute continuity]
+		Suppose f is integrable on $\mathbb{R}^d$. Then for every $\epsilon > 0$, the following are true:
+
+		i) There exists a set of finite measure, B such that:
+
+			$$\int_{B^c} |f| < \epsilon$$
+
+		ii) There is a $\delta > 0$ such that:
+
+			$$\int_E |f| < \epsilon$$
+
+		whenever $m(E) < \delta$.
+		\end{lemma}
+		\begin{proof} [first part]
+			WLOG, assume $f \ge 0$.
+
+			% create a sequence of increasing functions
+			If we let $B_N$ denote the ball with radius N, centered at the origin, and $f_N(x) = f(x) \chi B_N(x)$, then $f_N \ge 0$ is measurable, and an increasing function. The limit of $\{f_N\}$ is f(x). Therefore by the MCT, we have:
+
+				$$\lim_{N\rightarrow\infty} \int f_N = \int f$$
+
+			% use definition of limit for finite sized N
+			By definition of the limit, for a large N, we have:
+
+				$$0 \le \int f - \int f \chi B_N < \epsilon$$
+
+			The inner part is equal to $\int f (1 - \chi B_N)$, by linearity of the Lebesgue integral. Since $1 - \chi B_N = \chi B_N^c$, then we have that $\int_{B_N^c} f < \epsilon$.
+		\end{proof}
+		\begin{proof} [second part]
+
+		\end{proof}
+	\subsection{Lp Spaces}
+		When we take a collection of complex-valued functions on measurable subsets on $\mathbb{R}^d$ that are integrable, then they form a vector space over $\mathcal{C}$.
+
+		\subsubsection{L1 spaces}
+			L1 spaces are defined on integrable function where the $L^1$ norm is defined. That is:
+
+				$$||f||_{L^1} = \int_{\mathbb{R}^d} |f(x)| dx$$
+
+			is the norm of f. It is still a vector space, in that it is closed under addition, and obeys the triangle inequality. It also can define a metric on the space using the norm:
+
+				$$d(f, g) = ||f - g||_{L^1}$$
+
+			where the $d(f, g) = 0$ if and only if f = g a.e. It is also commutative (i.e. $d(f, g) = d(g, f)$), positive $d(f, g) = ||f - g||_{L^1} \ge 0$ and it obeys the triangle inequality.
+
+			% completeness of the L1 space
+			It is important to remind ourselves again about the property of completeness for a metric space. Namely, a metric space (V, d) is complete if for every Cauchy sequence $\{x_k\} \in V$ ($d(x_k, x_l) \rightarrow 0$ as k and l go to infinity), there exists an element of the metric space $x \in V$, such that the limit of the Cuachy sequence is x. In other words, there is an element within the space that a Cauchy sequence converges to for all Cauchy sequences.
+
+			In the next theorem, we show that the space of $L^1$ functions is complete. This is known as the Riesz-Fischer theorem. This is a very important theorem because it describes the convergence of Cauchy sequences in $L^1$ spaces, but can be extended to general $L^p$ spaces.
+
+			% Riesz-Fischer
+			\begin{theorem}
+			\label{thm:riesz-fischer-completeness}
+				The vector space $L^1$ is complete in its metric (d(f, g)).
+			\end{theorem}
+			\begin{proof}
+				% start with arbitrary Cauchy sequence
+				We consider a Cauchy sequence $\{f_n\}$ such that $||f_n - f_m||_{L^1} \rightarrow 0$ as $n, m$ go to infinity. We would like to extract a subsequence of $\{f_n\}$ that converges to $f \in L^1$ pointwise a.e. and in norm.
+
+				A.e. convergence does not hold for general Cauchy sequences. However, if convergence in norm is rapid enough, then a.e. convergence results. We proceed by taking a subsequence of the original Cauchy sequence.
+
+				% subsequence
+				We consider subsequence $\{f_{n_k}\}_{k=1}^\infty$ of $\{f_n\}$ with the property:
+
+					$$||f_{n_{k+1}} - f_{n_k}|| \le 2^{-k}$$
+
+				for all $k \ge 1$. Their existence is guaranteed by assumption of the Cauchy sequence being in $L^1$. That is: $||f_n - f_m|| \le \epsilon$ whenever n and m are larger then some $N_\epsilon$.  So we take $n_k = N_{2^{-k}}$, where $\epsilon = 2^{-k}$. 
+
+				% telescoping series
+				We now consider a telescoping series for f:
+
+					$$f(x) = f_{n_1}(x) + \sum_{k=1}^\infty (f_{n_{k+1}}(x) - f_{n_k}(x))$$
+
+				and 
+
+					$$g(x) = |f_{n_1}(x)| + \sum_{k=1}^\infty |f_{n_{k+1}} - f_{n_k}(x)|$$
+
+				TBD
+
+			\end{proof}
+		\subsubsection{Density Properties of the L1 space}
+
+			\begin{definition}
+				We say a set, E, of integrable functions is \textbf{dense} in $L^1$ if for every $f \in L^1$ and $\epsilon > 0$, there exists a $g \in E$ such that $||f - g||_{L^1} < \epsilon$
+			\end{definition}
+
+			The denseness definition of a set in $L^1$ is useful because proving properties of functions in $L^1$ may be obtained by say first proving those properties on a different set of functions that are simpler, and then using density to match a function in $L^1$ arbitrarily close.
+
+			The next theorem states which sets of functions are dense in $L^1(\mathbb{R}^d)$.
+
+			\begin{theorem}
+			\label{thm:dense_in_L1_funcs}
+				The following sets of functions are dense in $L^1(\mathbb{R}^d)$:
+
+				i) Simple functions
+				ii) Step functions
+				iii) Continuous functions of compact support
+
+				Related to \ref{thm:approx_nonneg_func}, \ref{thm:dominated_convergence} and \ref{ssub:littlewood_principles}.
+			\end{theorem}
+			\begin{proof}
+				% simple functions
+				i) is related in \ref{thm:approx_nonneg_func}. We need to see that if $f \in L^1$, and $\epsilon > 0$, then there exists a simple function such that $\int | f - \psi| < \epsilon$.
+
+				% do WLOGs
+				Approximating the real and imaginary part of f suffices: f is real-valued, and $f = f^+ - f^-$, which suffices to show that $f \ge 0$. Now we have a non-negative function, $f \ge 0,\ f \in L^1$ and we saw in \ref{thm:approx_nonneg_func} that there exists simple $\psi$ such that $\int | f - \psi | < \epsilon$. 
+
+				% earlier theorem
+				Earlier we saw $\exists \ \psi_k$ increasing converging to f. Since f dominates $\psi_k$, then by the DCT, $||f - \psi_k|| \rightarrow 0$. So $\psi = \psi_k$ for k large will get us the desired result.
+
+				% step functions
+				ii) is related in \ref{thm:approx_with_stepfuncs}. Since we have the first part of the result, it suffices to show that for simple functions in $L^1$, $\exists$ step function $\phi$ such that $||\phi - \psi||_{L^1} < \epsilon$. Then since $\psi$ is dense already, then $\phi$ is also dense. 
+
+				Since simple functions are just linear combinations of characteristic sets: $\psi = \chi_E$, with finite measure. If we can show that this can be approximated with step functions, then we have our desired result. This follows from Littlewood's Principles \ref{ssub:littlewood_principles}, where every set E is almost a finite union of non-overlapping rectangles (i.e. step functions).
+
+				% continuous functions of compact support
+				Now we prove iii). Since step functions are dense, then it suffices to show that for step functions in $L^1$, then there exists g continuous with compact support, such that:
+
+					$$||\phi - g||_{L^1}$$
+
+				This follows if when $\phi = \chi_{rectangle}$. 
+
+				If $g(x) = \begin{cases} 1 \mbox{[a,b]} \\ 0 \mbox{ } x \le a - \epsilon \mbox{ or } x \ge b - \epsilon \\ linear \ [a - \epsilon, a], [b, b-\epsilon] \end{cases}$. where g is continuous. Then $||\chi_{[a,b]} - g|| \le 2\epsilon$, where the $\epsilon$ is contributed on the linear segments from the intervals supporting the linear region. In fact each of those intervals are triangles, so in fact their integral is $\epsilon / 2$.
+			\end{proof}
+		\subsubsection{Invariance Properties of the Lebesgue Integral}
+			We will here see that integrable functions are invariant under translations, dilations and convolutions.
+
+			\begin{lemma} [translation and dilation invariance]
+				If $h \in \mathbb{R}^d$ with $f_h(x) = f(x-h)$, then if $f \in L^1$, so is $f_h$. Furthermore, $\int f(x) dx = \int f(x-h) dx$.
+
+				If $f \in L^1$, then so is its reflection.
+
+				If $f \in L^1$, and $\delta > 0$, then so is its dilation $f(\delta x)$ with $\int f(\delta x) dx = \delta^{-d} \int f(x) dx$.
+			\end{lemma}
+			\begin{proof}
+				% translation invariance of measure
+				First, we remember that measurable sets are translation invariant. That is $E \subset \mathbb{R}^d$ measurable with finite measure has the following property: For a characteristic function, $\chi_E(x-h) = \chi_{E_h}(x), \  \forall x \in \mathbb{R}^d$. So we then by definition of the Lebesgue integral for simple functions have:
+
+					$$\int \chi_E(x)dx = m(E) = m(E_h) = \int \chi_{E_h}(x) dx$$
+
+				% approximation of non-negative functions by simple functions
+				Next, we know that for $f \ge 0$, we can approximate it pointwise at every x with a sequence of simple functions. These sequences of step functions are also monotonic, so by the MCT, we have the following for non-negative f:
+
+					$$\int f dx = \lim_{k \rightarrow \infty} \int \psi_k(x) dx = \lim_{k \rightarrow \infty} \int \psi_k (x-h) dx = \int f(x-h)dx$$
+
+				% use linearity of L1 space
+				By the linearity of the L1 space (it's a vector space), this holds for all functions in L1.
+			\end{proof}
+			\begin{proof} [reflection]
+				This is done in the same way because measurable sets have a measurable reflection with the same measure.
+			\end{proof}
+			\begin{proof} [dilation]
+				This is done by also recognizing that for a measurable set E with finite measure that is a subset of $\mathbb{R}^d$, then dilation of points inside E results in a $\delta ^d$ factor on the measure of E.
+			\end{proof}
+
+			We now see that for f and g measurable functions, and some fixed $x \in \mathbb{R}^d$, then $f(x-y)g(y)$ is integrable, $f(x+y)g(-y)$ and $f(y)g(x-y)$ are integrable. We now define a convolution for Lebesgue integration.
+
+			\begin{definition} [Convolution]
+				$f*g(x)$ is a convolution that equals $\int_{\mathbb{R}^d} f(x-y)g(y)dy$.
+			\end{definition}
+
+			Next, let us examine the relationship between translation invariance of the Lebesgue integral and continuity of the function in L1 norm. That is because, there are integrable functions which are discontinuous at all x.
+
+			\begin{lemma}
+				If $f \in L^1$, then $||f_h - f||_{L^1} \rightarrow 0$ as $h \rightarrow 0$. Meaning that is continuous in the norm.
+
+				Note: if f was a continuous function with compact support, this is automatically true.
+			\end{lemma}
+	\subsection{Fubini's Theorem}
+		An important issue arising in integration is how to integrate functions in higher dimensions. Fubini's theorem will tell us conditions that we can break down a higher-dimensional integration into integrals along sub-dimensions making integration simpler.
+
+		We can generally write $\mathbb{R}^d$ as slices along its sub-dimensions. Say we have $\mathbb{R}^d = \mathbb{R}^{d_1} \times \mathbb{R}^{d_2}$, then we have:
+
+			$$E_x = \{y \in \mathbb{R}^{d_2}: (x, y) \in E\}$$
+			$$E_y = \{x \in \mathbb{R}^{d_1}: (x, y) \in E\}$$
+
+		\begin{theorem} [Fubini's Theorem]
+			Suppose f(x,y) is integrable on $\mathbb{R}^{d_1} \times \mathbb{R}^{d_2}$, then for a.e. $y \in \mathbb{R}^{d_2}$:
+
+			i) The slice $f^y$ is integrable on $\mathbb{R}^{d_1}$
+
+			ii) The slice function $\int f^y(x) dx$ is integrable on $\mathbb{R}^{d_2}$
+
+			iii) The integrals $\int_{\mathbb{R}^{d_2}} ( \int_{\mathbb{R}^{d_1}} f(x, y) dx) dy = \int_{\mathbb{R}} f$. 
+
+			Note: the theorem is symmetric in x and y, so we can conclude vice-versa for a.e. x.
+		\end{theorem}
+		\begin{proof}
+			The outline of the proof will be as follows: We create a larger class of set of all integrable functions that satisfy i), ii) and iii). We show that this class contains the L1 space of integrable functions.
+
+			Then we show that the L1 space contains this set.
+			\begin{enumerate}
+				\item F is closed under finite linear combinations
+				\item F is closed under limits of monotonic sequences that are integrable
+				\item The indicator function of a set E, which is a $G_\delta$ set of finite measure is contained in F
+				\item Same as above with a set of measure zero
+				\item Same as above for a set of finite measure
+				\item By the density of simple functions in L1, we show that the L1 space is equivalent to F
+			\end{enumerate}
+
+			
+
+		\end{proof}
+
+		\subsubsection{Fubini-Tonelli Theorem}
+			In Fubini's theorem, the assumptions require that \textbf{$f(x,y)$ is integrable}. Then as a result, we get interchangability of the integrands. However, Fubini-Tonelli theorem will get the same consequences, but with a different assumption! This is useful since we are not always guaranteed that $\int |f(x,y)| < \infty$ (i.e. f is integrable). 
+
+			In Fubini-Tonelli's theorem, we may first consider $|f|$, such that the function is non-negative. Then assuming that the function was measurable, then we can compute $\int f$ by iterated integrals. Then if $|f|$ is integrable (i.e. $\int |f| < \infty$), then we now fall under the assumptions of Fubini's theorem.
+
+			\begin{theorem} [Fubini-Tonelli Theorem]
+				Suppose $f(x,y)$ is a non-negative measurable function on $\mathbb{R}^{d_1} \times \mathbb{R}^{d_2}$. Then for a.e. $y \in \mathbb{R}^{d_2}$, we have the following:
+
+					i) The slice $f^y$ is measurable on $\mathbb{R}^{d_1}$
+
+					ii) The function $\int_{\mathbb{R}^{d_1}} f^y(x) dx$ is measurable on $\mathbb{R}^{d_1}$
+
+					iii) $\int_{\mathbb{R}^{d_2}} (\int_{\mathbb{R}^{d_1}} f(x,y) dx) dy = \int_{\mathbb{R}^d} f(x,y) dx dy$
+			\end{theorem}
+			\begin{proof}
+
+			\end{proof}
+\end{document}

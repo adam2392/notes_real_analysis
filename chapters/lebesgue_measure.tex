@@ -1,0 +1,371 @@
+\documentclass[class=article, crop=false]{standalone}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage[subpreambles=true]{standalone}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{lemma}
+\newtheorem*{lemma}{Lemma}
+
+\theoremstyle{theorem}
+\newtheorem*{theorem}{Theorem}
+
+\theoremstyle{corollary}
+\newtheorem*{corollary}{Corollary}
+
+\theoremstyle{property}
+\newtheorem*{property}{Property}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\begin{document}
+
+\section{Lebesgue Measure}
+	Lebesgue measure is a notion used to make Lebesgue integration possible, which is a generalization of the Riemann integral.
+
+	\subsection{Lebesgue Outer (Exterior) Measure}
+		This notion is essentially defined by taking a countable sequence of sets that cover the set of interest. This "approximates" the "volume" of the set from the outside.
+
+		What are some basic notions that lead up to our definition of the exterior measure? First, let us examine the problem of \textbf{covering}: deconstructing a set into a union of (almost) disjoint structured sets. These structured sets can be balls, cubes, or rectangles possibly. We start off with a basic lemma that allows us to interchange the volume of a rectangle with its covering of rectangles.
+
+		% rectangle volume = sum of its coverings if they are almost disjoint union
+		\begin{lemma}
+			If a rectangle R is the almost disjoint union of finitely many other rectangles: $R = \bigcup_{k=1}^N R_k$, then the volume of R is equivalent to the summation of the volumes of the $R_k$'s.
+
+				$$|R| = \sum_{k=1}^N |R_k|$$
+		\end{lemma}
+
+		What happens when you remove the assumption of \textbf{almost disjointness}? Then we have a finite sub-additivity condition.
+
+		% rectangular volume sub-additivity
+		\begin{lemma}
+			If $R, R_1, ..., R_N$ are rectangles with $R \subset \bigcup_{k=1}^N R_k$, then:
+				$$|R| \le \sum_{k=1}^N |R_k|$$
+		\end{lemma}
+
+		Now we have some understanding of how rectangles and their volumes behave when covered by either almost disjoint sets, or arbitrary sets. This next theorem tells us that every open subset in the real line can be written \textbf{uniquely} as a countable union of disjoint open intervals (i.e. rectangles).
+
+		% open subset of R written as a countable union of disjoint open intervals
+		\begin{theorem}
+			Every open subset O of $\mathbb{R}$ can be written uniquely as a countable union of disjoint open intervals.
+		\end{theorem}
+
+		This is an interesting result because it allows us to formulate any arbitrary set \textbf{uniquely} as a union of much simpler sets. If we extend to $\mathbb{R}^d$, we see however that now we do not have uniqueness, but we can still write any open subset in $\mathbb{R}^d$ as a countable union of \textbf{almost disjoint closed cubes}.
+
+		\begin{theorem}
+		\label{thm:covering_countable_closed_cubes}
+			Every open subset O of $\mathbb{R}^d$ with $d \ge 1$, can be written as a countable union of almost disjoint closed cubes.
+		\end{theorem}
+
+		Before defining the Lebesgue measure, we first start off by defining the \textbf{exterior} measure. That is the measure of a set by approximating it from the "outside". 
+
+		\begin{definition}
+		\label{def:exterior_measure}
+			If $E \subset \mathbb{R}^d$, the exterior measure of E is:
+
+				$$m_*(E) = \inf \sum_{j=1}^\infty |Q_j|$$
+
+			where the infimum is taken over all countable coverings by closed cubes in Theorem \ref{thm:covering_countable_closed_cubes}.
+		\end{definition}
+
+		% properties of exterior measure
+		Properties of the outer measure:
+		\begin{enumerate}
+			\item Non-negative: Every closed cube volume has by definition non-negative volume.
+			\item Monotonic: If $E_1 \subset E_2$, then $m_*(E_1) \le m_*(E_2)$.
+			\item Countable sub-additivity
+			\item Disjoint finite additivity: If $E = E_1 \cup E_2$ with $d(E_1, E_2) > 0$, then:
+				$$m_*(E) = m_*(E_1) + m_*(E_2)$$
+			\item Disjoint countable additivity
+		\end{enumerate}
+
+	\subsection{Invariance Properties of the Lebesgue Measure}
+		We define the Lebesgue measure, m.
+
+		\begin{enumerate}
+			\item m is translation invariant.
+			\item m is dilation invariant.
+			\item m is reflection about the origin invariant
+		\end{enumerate}
+	\subsection{Lebesgue Measurable Functions}
+		We start by defining the characteristic function of a set, E:
+
+			$$\chi_E(x) = \begin{cases} 1 \mbox{if } x \in E \\ 0 \mbox{else} \end{cases}$$
+
+		% riemannian integration
+		We can now remind ourselves of the Riemann integral, which is defined with rectangles.
+
+			$$f = \sum_{k=1}^N a_k \chi_{R_k}$$
+
+		where each $R_k$ is a rectangle and the $a_k$ are constants.
+
+		% Lebesgue integration
+		However, let's look at Lebesgue integration where the characteristic function operates on a set of measurable functions with finite measure.
+
+			$$f = \sum_{k=1}^N a_k \chi_{E_k}$$
+
+		where the $E_k$ are measurable sets of finite measure.
+
+		\subsubsection{Defining Measurability on Functions}
+			% measurability of a function
+			\begin{definition}
+				A function f defined on a measurable subset E of $\mathbb{R}^d$ is measurable if for all $a \in \mathbb{R}$ the set formed by the inverse image:
+
+				$$f^{-1}([-\infty, a)) = \{x \in E: f(x) < a\}$$
+
+				is measurable.
+			\end{definition}
+
+			Note that functions are measurable if their one-side bounded preimage is measurable. There are multiple definitions that are equivalent that we will not state here.
+
+			Here are some properties that measurable functions have:
+
+			% finite-valued functions 
+			% preimage of their open/closed sets
+			\begin{property}[Finite valued preimage of open/closed sets]
+				If f is a finite-valued function. Then it is measurable iff $f^{-1}(O)$ is measurable for every open set and iff $f^{-1}(F)$ is measurable for every closed set F.
+			\end{property}
+
+			% addition and product 
+			\begin{property}[Addition and multiplication]
+				If f and g are finite-valued functions, then f + g and fg are measurable.
+			\end{property}
+
+			\begin{property}[Integer powers of measurable functions]
+				If f is measurable, then $f^k$ for $k \ge 1$ are measurable.
+			\end{property}
+
+			% continuity
+			\begin{property}[Continuity]
+				If f is continuous on $\mathbb{R}^d$, then f is measurable. 
+			\end{property}
+
+			\begin{property}[Composition of continuous on measurable + finite valued function]
+				If $\Phi$ is continuous and f is measurable and finite valued, then $f o g$ is measruable.
+			\end{property}
+
+			% sequences
+			\begin{property}[Sequence of measurable functions]
+				For a sequence of measurable functions, their sup, inf, limsup, and liminf are measurable.
+			\end{property}
+
+			\begin{property}[Limit of sequence of measurable functions]
+				A limit of sequence of measurable functions is measurable.
+			\end{property}
+
+			% almost everywhere property
+			\begin{property}[Almost everywhere property]
+				If f measurable and f(x) = g(x) for a.e. x. Then g is measurable.
+			\end{property}
+
+
+		\subsubsection{Approximation of Functions with Pointwise Functions}
+			Here, we are interested in seeing that certain classes of functions can be approximated by a sequence of either non-negative or arbitrary point functions.
+
+			\paragraph{Approximating Non-negative Measurable Functions}
+
+			We start with the simplest set of functions we might approximate, and these are functions that are non-negative. Note then one can approximate arbitrary functions by approximating the function on the positive support and the function on the negative support.
+
+			\begin{theorem}
+			\label{thm:approx_nonneg_func}
+
+				Suppose f is a non-negative measurable function. Then there exists an increasing sequence of non-negative simple functions $\{\psi_k\}_{k=1}^\infty$ that converges pointwise to f.
+
+				Monotonicaly increasing sequence:
+
+				$$\psi_k(x) \le \psi_{k+1}(x)$$
+
+				Pointwise convergence:
+
+				$$\lim_{k\rightarrow\infty} \psi_k(x) = f(x), \forall x$$
+
+			\end{theorem}
+			\begin{proof}
+				% truncate the range based on its domain
+				We can first truncate the function based on its domain. For $N \ge 1$, $Q_N$ is the cube centered at the origin with side length N. Then we define:
+
+					$$F_N(x) = \begin{cases} f(x) \mbox{if } x \in Q_N \mbox{and } f(x) \le N \\ N \mbox{if } x \in Q_N \mbox{and } f(x) > N \\ 0 \mbox{else} \end{cases}$$
+
+				This provides us with a sequence of sets that converge to f for all x. 
+
+				% partition the truncation function
+				Now, if we also partition this truncated function over its range of [0, N] (remember non-negative function with the maximum value being the truncation). Then for fixed N, and $M \ge 1$, we can define the set:
+
+					$$E_{l, M} = \{ x \in Q_N : \frac{l}{M} < F_N(x) \le \frac{l+1}{M} \},\ for\ 0 \le l \le N M$$
+
+				This set partitions the range of the truncation function into segments of size $\frac{1}{M}$. So the sum over these partitions consists of $F_{N, M}(x)$.
+
+					$$F_{N,M}(x) = \sum_{l=1}^{NM} \frac{l}{M} \chi E_{l, M}(x)$$
+
+				which note is a linear combination of characteristic functions based on the set $E_{l,M}$.
+
+				% establish this partition is a simple function
+				This $F_{N,M}(x)$ is a simple function since it is the linear combination of characteristic functions. In addition, notice that:
+
+					$$0 \le F_N(x) - F_{N,M}(x) \le 1/M$$
+
+				for all x, since it is partitioned as such. If we now choose $\psi_k = F_{2^k, 2^k}$, with N = M = $2^k$, then $0 \le F_N(x) - \psi_k(x) \le 1 / 2^k$. These $\psi_k$ are increasing functions and it converges pointwise to f.
+			\end{proof}
+
+			\paragraph{Approximating Measurable Functions}
+				Note we can now easily just approximate general measurable functions decomposed into a positive and negative section. 
+
+
+		\subsubsection{Approximation of Functions with Step Functions}
+			Instead of just simple functions, we can now show approximation using step functions. When using step functions, we only get convergence a.e. 
+
+			Since we can only get convergence a.e., we simply have to show that f defined on a measurable set with finite measure can be approximated.
+
+			\begin{theorem}
+			\label{thm:approx_with_stepfuncs}
+				Suppose f is measurable on $\mathbb{R}^d$. Then there exists a sequence of step functions $\{\psi_k\}_{k=1}^\infty$ that converges pointwise to f(x) for a.e. x.
+			\end{theorem}
+			\begin{proof}
+				It suffices to show that if E is a measurable set with finite measure, then $f = \chi E$ can be approximated by step functions. 
+
+				% Create a covering of cubes
+
+			\end{proof}
+
+		\subsubsection{Approximation of Functions with Polynomial Functions}
+			Here, we have the famouse Weierstrass theorem. We state the theorem here without going into the proof.
+
+			\begin{theorem}
+			\label{thm:weirstrass_approx}
+				If f is a continuous function supported on a compact interval, $C \subset \mathbb{R}^d$, then given $\epsilon > 0$, we can find p such that:
+
+					$$\sup | f(x) - p(x) | < \epsilon$$
+
+				where p(x) is a polynomial function.
+			\end{theorem}
+
+
+		\subsubsection{Littlewood Principles}
+			\label{ssub:littlewood_principles}
+			\begin{enumerate}
+				\item Every set is nearly a finite union of intervals.
+				\item Every function is nearly continuous
+				\item Every convergent sequence is nearly uniformly convergent
+			\end{enumerate}
+
+			% first principle
+			The first principle is shown in Theorem 3.4 of Stein, where if E is a measurable set that is finite, then there exists a finite union of closed cubes such that the symmetric differnece between E and F has measure arbitrarily small.
+
+				$$m((E-F) \cup (F-E)) \le \epsilon$$
+
+			for $F = \bigcup_{j=1}^N Q_j$ of closed cubes.
+
+			% second principle - Lusin's theorem
+			The following theorem gives us conditions for getting \textbf{continuity} on a measruable closed subset of a set of finite measure.
+			\begin{theorem}
+			\label{thm:lusins}
+				Suppose f is measurable and finite valued on E (E has finite measure). Then for every $\epsilon > 0$, there exists a closed set $F_\epsilon \subset E$ with:
+
+					$$m(E - F_\epsilon) \le \epsilon$$
+
+				such that $f$ on $F_\epsilon$ is continuous. 
+			\end{theorem}
+			\begin{proof}
+				% construct sequence of step functions
+				First, we construct a sequence of step functions that converge to f a.e. We know this by our approximation theorems earlier.
+
+				% construct sequence of sets
+				Then we can find sets $E_n$ so that $m(E_n) < \frac{1}{2^n}$ and $f_n$ is continuous outside $E_n$. 
+
+				Since they are finite combination of characteristic functions of rectangles. We can establish continuity outside these sets by tapering off the value in a continuous way. The only area that has discontinuity is the transition from $E_n$ to $E_n^c$, which we can make have measure zero.
+
+				% utilize Egorov's theorem
+				By Egorov's theorem, we can then find a closed set $A_{\epsilon / 3}$ such that $f_n \rightarrow f$ uniformly and $m(E - A_{\epsilon / 3}) \le \epsilon / 3$. 
+
+				Then we can consider a set:
+
+					$$F' = A_{\epsilon / 3} - \bigcup_{n \ge N}$$
+
+				where N is very large so that the sum $\sum_{n \ge N} \frac{1}{2^n} < \epsilon / 3$. 
+
+				% Establish continuity hinged on N
+				Now every $n \ge N$, we have $f_n$ is continuous on F', and so $f = \lim f_n$ is also continuous on F'. 
+
+				% find closed set that approximates F'
+				Now, just approximate F' with a closed set $F_\epsilon$ that makes the measure of the differences arbitrarily small.
+			\end{proof}
+
+			% third principle - Egorov's theorem
+			The following gives conditions for getting \textbf{uniform convergence} on a measurable closed subset of a set of finite measure.
+
+			\begin{theorem} [Egorov's Theorem]
+			\label{thm:egorovs}
+				Suppose $\{f_k\}$ is a sequence of measurable functions defined on a measurable set E with finite measure and that $f_k \rightarrow f$ a.e. on E. 
+
+				Then given $\epsilon > 0$, we can find a closed set $A_\epsilon \subset E$, such that $m(E - A_\epsilon) \le \epsilon$ and $f_k \rightarrow f$ uniformly on $A_\epsilon$.
+
+				*If we are willing to throw away an arbitrary small set, then we can get uniform convergence.
+			\end{theorem}
+			\begin{proof}
+				% without loss of generality
+				WLOG, we can assume that $f_k(x) \rightarrow f(x)$ for every $x \in E$. Because if we do not have this for some x that has measure zero, then we just redefine $f_k(x)$ as f(x) on that subset of measure zero, hence getting our general situation.
+
+				% construct sequence of monotonically increasing sets
+				For pairs of non-negative integers, n and k, we construct a set:
+
+					$$E_k^n = \{x \in E : |f_j(x) - f(x)| < 1/n, \text{for all j > k}\}$$
+
+				We have a $1/n$ error we are okay with and a tail of the sequence wrt f(x) we are interested in.
+
+				Given n, we now have that $E_k^n \subset E_{k+1}^n$ and that $E_k^n$ converges to E as k tends to infinity. 
+
+				% measure converges based on corollary
+				By an earlier theorem, we have that $m(E_k^n) \rightarrow m(E)$ as $k\rightarrow\infty$, so we have that:
+
+					$$\lim_{k\rightarrow\infty} m(E - E_k^n) \rightarrow0$$
+
+				% construct a geometric series that bounds the measure of the set differences
+				So we can choose $k_n$ such that $m(E - E_{k_n}^n < 2^{-n}$, since we have that the limit converges to 0. 
+
+				% construct situation when f_j - f is bounded 
+				Then we have whenever $j > k_n$ and $x \in E_{k_n}^n$:
+
+					$$|f_j(x) - f(x)| < 1/n$$
+
+				% now bound the geometric series by epsilon
+				We now choose N >> 1, such that $\sum_{n=N}^\infty 2^{-n} < \epsilon /2$, and we make a intersection of all these sets over $n \ge N$:
+
+					$$\tilde{A}_\epsilon = \bigcap_{n \ge N} E_{k_n}^n$$
+
+				Now, we can compare E to this intersection of sets:
+
+					$$m(E - \tilde{A}_\epsilon) \le \sum_{n=N}^\infty m(E - E_{k_n}^n) < \epsilon / 2$$
+
+				% establish delta to get uniform continuity
+				Now if $\delta > 0$, choose $n \ge N$, such that $1/n < \delta$ and note $x \in \tilde{A}_\epsilon$ implies $x \in E_{k_n}^n$, since it is in the intersection of such sets. So then 
+
+					$$|f_j(x) - f(x)| < 1/n < \delta$$
+
+				 $\forall j > k_n$ for every $x \in \tilde{A}_\epsilon$.
+
+				 % create the final set that is closed
+				 In order to choose the closed subset, we can use Thm 3.4 to always get a closed subset of a measurable set is arbitrarily small. We can get: $A_\epsilon \subset \tilde{A}_\epsilon$ with $m(\tilde{A}_\epsilon - A_\epsilon) < \epsilon / 2$.
+			\end{proof}
+
+		The Lebesgue measurable sets are Borel $\sigma$-fields with the added addition of subsets of Borel field of measure zero.
+
+\end{document}

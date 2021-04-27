@@ -1,0 +1,561 @@
+\documentclass[class=article, crop=false]{standalone}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{lipsum}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage[subpreambles=true]{standalone}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+\usepackage[subpreambles=true]{standalone}
+\usepackage{import}
+\begin{document}
+\section{Hilbert Spaces}
+	\subsection{The L2 space: square integrable functions}
+		% L2 space
+		The space of square integrable functions $L^2$ turns out to be very important. It contains many symmetry properties, namely an inner product, which will help us define the notion of orthogonality. It is very important in Fourier analysis: namely it is complete (compared to the space of Riemann integrals). Since it is complete, it will be very useful compared to the space of square Riemann integrable functions.
+
+		\begin{definition} [L2 - norm]
+			The $L^2(\mathbb{R}^d)$ is all complex-valued functions f, satisfying:
+
+				$$\int_{\mathbb{R}^d} |f(x)|^2 dx < \infty$$
+
+		\end{definition}
+
+		We can also define an inner product, which provides a very important structural property. The inner product in L2 is defined as:
+
+			$$(f, g) = \int_{\mathbb{R}^d} f(x) \bar{g(x)} dx$$
+
+		If $f, g \in L^2(\mathbb{R}^d)$. Note that $(f,f) = ||f||_{L^2}^2$. That is the norm for L2 is derived from the inner product of the space. There are a number of properties for L2 that are important:
+
+		\begin{proposition}
+			The following are properties of the L2 space:
+
+			i) L2 is a vector space.
+			ii) $f(x) \bar{g(x)}$ is integrable whenever $f, g \in L^2$. Moreover, the Cauchy-Schwartz inequality is valid:
+
+				$$|(f,g)| \le ||f||_2 ||g||_2$$
+
+			iii) If $g \in L^2$ is fixed, then the map $f \mapsto (f, g)$ is linear and also $(f, g) = \bar{(g, f)}$. 
+
+			iv) The triangle inequality is valid, since L2 defines a norm.
+		\end{proposition}
+		\begin{proof}
+			If $f \in L^2$ and $\lambda \in \mathcal{C}$, then $\lambda f \in L^2$. Next, we want to show $f, g \in L^2$, then $f + g \in L^2$. If we consider $|f(x) + g(x)| \le 2 max(|f(x)|, |g(x)|)$, then if we square both sides we maintain the inequality:
+
+				$$|f(x) + g(x)|^2 \le 4 (|f(x)|^2 + |g(x)|^2)$$
+
+			Then by the definition of the L2 norm:
+
+				$$\int |f+g|^2 \le 4 ( \int |f|^2 + \int |g|^2) < \infty$$
+
+			since both f and g are by themselves L2.
+
+			% fbar(g) is integrable
+			For ii), we recall that $A, B \ge 0$ implies $AB \le \frac{1}{2} (A^2 + B^2)$. Then we plug in for our f and g:
+
+				$$\int |f\bar{g}| \le \frac{1}{2} ( \int|f|^2 + \int|g|^2) = \frac{1}{2}(||f||^2 + ||g||^2) < \infty$$
+
+			So therefore $f \bar{g} \in L^1$. 
+
+			% Cauchy-Schwartz inequality
+			To show that the Cauchy-schwartz inequality holds, we consider if $||f||_2 = 0$, or $||g||_2 = 0$, then it is trivial: fg =  a.e. and hence (f,g) = 0. So WLOG, assume that ||f|| and ||g|| are not zero. 
+
+			We first normalize each f and g, such that:
+
+				$$\tilde{f} = f / ||f||$$
+
+			and the same for g, such that $||\tilde{f}|| = ||\tilde{g}|| = 1$. Then note that we have that $|(f, g)| \le 1$ following the previous inequality. Now, if we multiply both sides by $||f||||g||$, then we get:
+
+				$$|(f,g)| \le ||f||||g||$$
+		\end{proof}
+
+		% limits and Cauchy sequence in L2
+		We next seek to define the notion of a limit in the space of $L^2(\mathbb{R}^d)$. The norm on L2 induces a metric, as follows:
+
+			$$d(f,g) = ||f - g||_{L^2}$$
+
+		So, with a distance metric, we can define the notion of a \textbf{Cauchy sequence} $\{f_n\} \subset L^2(\mathbb{R}^d)$, such that:
+
+			$$d(f_n, f_m) \rightarrow 0$$
+
+		as n, m go to infinity. This sequence converges to $f \in L^2$ if $d(f_n, f) \rightarrow 0$ as $n \rightarrow \infty$.
+
+		% completeness of L2
+		Next, we will show that the $L^2$ space is complete with the metric defined by its norm.
+
+		\begin{theorem} [Completeness of the $L^2(\mathbb{R}^d)$ space]
+			The space $L^2$ is complete in its metric.
+
+			Namely this states that every Cauchy sequence in $L^2$ converges to a function in $L^2$. This is different compared to the space of square Riemann integrable functions, which does not have completeness.
+		\end{theorem}
+		\begin{proof}
+			We consider a Cauchy sequence in L2, $\{f_n\}_{n=1}^\infty$, and consider a subsequence $\{f_{n_k}\}_{k=1}^\infty$ of $\{f_n\}$ with the following property:
+
+				$$||f_{n_{k+1}} - f_{n_k}|| \le 2^{-k}$$
+
+			for all $k \ge 1$. So the subsequence is Cauchy with an exponential factor. 
+
+			We then consider the series:
+
+				$$f(x) = f_{n_1}(x) + \sum_{k=1}^\infty (f_{n_{k+1}}(x) - f_{n_k}(x))$$
+
+			and $g(x)$ is the series with absolute values. 
+
+			% partial sums
+			Next, we consider the partial sums of each of the series to demonstrate an upper bound. We can then take $K \rightarrow \infty$ and apply the MCT to prove that $\int |g|^2 < \infty$. 
+
+				$$S_K(f)(x) = f_{n_1}(x) + \sum_{k=1}^K (f_{n_{k+1}}(x) - f_{n_k}(x)) = f_{n_{K+1}}(x)$$
+
+			and 
+
+				$$S_K(g)(x) = |f_{n_1}(x)  + \sum_{k=1}^K |(f_{n_{k+1}}(x) - f_{n_k}(x))| = |f_{n_{K+1}}(x)|$$
+
+			based on the fact that these are telescoping series. We can then apply the triangle inequality to get:
+
+				$$||S_K(g)|| \le ||f_{n_1}|| + \sum_{k=1}^K ||f_{n_{k+1}} - f_{n_k}|| \le ||f_{n_1}|| + \sum_{k=1}^K 2^{-k}$$
+
+			We take the limit as K goes to infinity and apply the MCT to show that since $\int |g|^2 < \infty$ by construction here ($f_{n_1}$ is L1 and hence norm is finite, and the second term is a geometric series). Then since $|f| \le g$, then $f \in L^2$. Hence the Cauchy sequence converges to a function in L2.
+
+			% convergence in norm
+			Since the series defining f, converge to f a.e., then that means that $S_K(f(x))$ converges to f a.e. Furhtermore, we note that:
+
+				$$|f - S_K(f)|^2 \le (2g)^2$$
+
+			for all K, and since g is integrable, then by the DCT, we have that $||f_{n_k} - f|| \rightarrow 0$ as k tends to infinity. So this demonstrates that the subsequence converges in L2. We want that the whole sequence converges, so we next consider that sequence. We know that it is Cauchy, and so given a $\epsilon > 0$, there exists a N such that:
+
+				$$||f_n - f_m||_2 < \epsilon,\ \forall m,n > N$$
+
+			If $n_k$ is large such that $n_k > N$, then we can have:
+
+				$$||f_{n_k} - f||_2 < \epsilon$$
+
+			then we can now write using the triangle inequality:
+
+				$$||f_n - f|| \le ||f_n - f_{n_k}|| + ||f_{n_k} - f|| \le 2 \epsilon$$
+
+			as long as $n > N$.
+		\end{proof}
+
+		% separability
+		Next, we can state another important property of L2. Namely, it is separable, implying that their linear combinations of countable collections of L2 functions are dense in $L^2$.
+
+		\begin{theorem} [Separability of the L2 space]
+			The space $L^2(\mathbb{R}^d)$ is separable: there exists a countable collection $\{f_k\}$ of elements in $L^2$, such that linear combinations of these elements are dense in $L^2$.
+		\end{theorem}
+		\begin{proof}
+			% define a truncation function based on a rectangle in R^d
+		\end{proof}
+
+	\subsection{L2 to Hilbert Spaces}
+		We can now define an abstract L2 space known as the Hilbert space. A Hilbert space is simply taking all the above properties for L2 and combining them into a set of 6 properties:
+
+		\begin{enumerate}
+			\item
+		\end{enumerate}
+
+		\subsubsection{Orthogonality in Hilbert Spaces}
+			A very important property of Hilbert spaces is the notion of orthogonality, which is a consequence of the inner product defined in this space. Two elements, f and g in hilbert space H are orthogonal if:
+
+				$$(f, g) = 0$$
+
+			that their inner product is zero.
+
+			In this proposition, we will see that orthogonality is explicitly linked to the L2 norm via the Pythagorean theorem.
+
+			\begin{proposition} [Pythagoran Theorem in Hilbert Spaces]
+				If $f \perp g$, then $$||f + g||^2 = ||f||^2 + ||g||^2$$.
+			\end{proposition}
+			\begin{proof}
+				When $(f, g) = 0$, then $(g, f) = 0$ as well, so we can write:
+
+				\begin{align}
+					||f + g||^2 = (f+g, f+g) \\
+						= ||f||^2 + (f,g) + (g,f) + ||g||^2 \\
+						= ||f||^2 + ||g||^2
+				\end{align}
+			\end{proof}
+
+			% orthonormality
+			For a finite or countably infinite subset, $\{e_1, e_2, ...\}$ of a hilbert space, we can say that they are orthonormal if their inner product is equal to 1 when same vector and 0 otherwise. That is each $e_k$ has unit norm and is orthogonal to all other vectors. 
+
+			Orthonormality has four equivalent characterizations in the context of an orthonormal basis for H.
+
+			\begin{theorem} [Equivalent conditions for an orthonormal set]
+				The following properties of an orthonormal set $\{e_k\}$ in a Hilbert space are equivalent:
+
+				i) Finite linear combinations of elements in $\{e_k\}$ are dense in H.
+				
+				ii) If $f \in H$, and $(f, e_j) = 0$ for all j, then f = 0.
+
+				iii) If $f \in H$ and $S_N(f) = \sum_{k=1}^N a_k e_k$ where $a_k = (f, e_k)$ then $S_N(f) \rightarrow f$ as N goes to infiniity in the norm.
+
+				iv) If $a_k = (f, e_k)$, then $||f||^2 = \sum_{k=1}^\infty |a_k|^2$
+			\end{theorem}
+
+			As a result of this theorem, two important inequalities and identities come out. First, Bessel's inequality holds for any orthonormal family set $\{e_k\}$:
+
+				$$\sum_{k=1}^\infty |a_k|^2 \le ||f||^2$$
+
+			They are equal when $\{e_k\}$ is an orthonormal basis for the Hilbert space. The identitys is known as \textbf{Parsevals identity}.
+
+				$$\sum_{k=1}^\infty |a_k|^2 = ||f||^2$$
+
+			Now, one might ask, when does a basis exist for a Hilbert space, such that Parseval's identity holds? The answer in this theorem is that any hilbert space \textbf{has an orthonormal basis}.
+
+			\begin{theorem} [Existence of an orthonormal basis in Hilbert spaces]
+				Any Hilbert space, H has an orthonormal basis.
+			\end{theorem}
+
+		\subsubsection{Unitary Mappings in Hilbert Spaces}
+			Unitary mappings in Hilbert spaces are similar to the unitary matrices in finite-dimensional vector spaces (i.e. matrices). They preserve norm, are linear, have eigenvalues of absolute value 1 and are bijections (e.g. invertible; one-to-one and onto mappings). Namely a mapping $U: H \rightarrow H'$ is called unitary if:
+
+				i) U is linear; $U(\alpha f + \beta g) = \alpha U(f) + \beta U(g)$
+
+				ii) U is a bijection
+
+				iii) $||Uf||_{H'} = ||f||_H$ for all $f \in H$
+
+			By definition of being a bijection, there exists an inverse operator of U, which is also unitary. By preservation of the norm in property iii, Unitary operators are linear with respect to inner product:
+
+				$$(Uf, Ug)_{H'} = (f, g)_H$$
+
+			for all $f, g \in H$.
+
+			% polarization of inner product
+			We can polarize the inner product for F and G that are elements of our space:
+
+				$$(F, G) = \frac{1}{4} ( ||F + G||^2 - ||F - G||^2 + i (||F/i + G||^2 - ||F/i - G||^2))$$
+
+
+			We say that H and H' that are two Hilbert spaces are unitarily equivalent if there is a unitary mapping $U: H \rightarrow H'$. As a consequence of the above results, the following corollary states that any two infinite-dimensional Hilbert spaces are unitarily equivalent.
+
+			\begin{corollary} [Unitary equivalence of infinite-dimensional Hilbert spaces]
+				Any two infinite-dimensional Hilbert spaces are unitarily equivalent.
+			\end{corollary}
+			\begin{proof}
+				If H and H' are two infinite-dimensional Hilbert spaces, we can select for each an orthonormal basis. Say these are:
+
+					$$\{e_1, e_2, ...\} \in H$$
+
+				and
+
+					$$\{e'_1, e'_2, ...\} \in H'$$
+
+				Then we consider the following mapping for $f = \sum_{k=1}^\infty a_k e_k$:
+
+					$$U(f) = g$$
+
+				where $g = \sum_{k=1}^\infty a_k e_k'$. The mapping U is linear and invertible. By Parseval's identity:
+
+					$$||Uf||_{H'}^2 = ||g||_{H'}^2 = \sum_{k=1}^\infty |a_k|^2 = ||f||_{H'}^2$$
+
+				Hence, g is unitarily equivalent to f.
+			\end{proof}
+
+			As a result, all infinite-dimensional Hilbert spaces are unitarily equivalent to $L^2(\mathcal{N})$. In addition, finite-dimensional Hilbert spaces are unitarily equivalent to $\mathcal{C}^d$ if they the same dimension. 
+
+			% prehilbert spaces
+			Another important notion is a pre-Hilbert space. These are useful for constructing a space $H_0$ thathas all the properties of a Hilbert space except completeness (e.g. space of Riemann integrable functions). We will see that these pre-Hilbert spaces can be \textbf{completed} to form a Hilbert space.
+
+			\begin{proposition} [Completion of a pre-Hilbert space]
+				Suppose $H_0$ is a pre-hilbert space with inner product $(.,.)_0$. Then we can find a Hilbert space H with inner product $(.,.)$ such that:
+
+				i) $H_0 \subset H$
+
+				ii) $(f, g)_0 = (f, g)$ whenever $f, g \in H_0$
+
+				iii) $H_0$ is dense in H
+			\end{proposition}
+			\begin{proof}
+				The proof by construction follows Cantor's method of obtaining real numbers as the completion of the rationals in terms of Cauchy sequences of rational numbers.
+			\end{proof}
+
+	\subsection{Fourier Series and Fatou's Theorem}
+		When considering Fourier series, we generally consider a larger class of functions, namely the class of integrable functions on $[-\pi, \pi]$. Note that $L^2([-\pi, \pi]) \subset L^1([-\pi, \pi])$ by the Cauchy-Schwartz inequality. We define the nth Fourier coefficient of f as:
+
+			$$a_n = \frac{1}{2\pi} \int_{-\pi}^\pi f(x) e^{-inx} dx$$
+
+		The Fourier series of f is then formally $\sum_{n=-\infty}^\infty a_n e^{inx}$, so $e^{inx}$ forms an orthonormal basis for $L^2([-\pi, \pi])$. The next theorem connects integrability with results for the Fourier coefficients and a notion called Abel summability of the Fourier series.
+
+		\begin{theorem} [Fourier coefficients are unique and Abel summable when f is L1]
+			Suppose f is integrable on $[-\pi, \pi]$, then:
+
+			i) If $a_n = 0$ for all n, then $f(x) = 0$ for a.e. x
+
+			ii) Almost everywhere Abel summability holds: $\sum_{n=-\infty}^\infty a_n r^{|n|}e^{inx} \rightarrow f(x)$ for a.e. x as $r \rightarrow 1$ for r < 1
+		\end{theorem}
+		\begin{proof}
+			% intuition
+			We first prove Abel summability, and then demonstrate that the first conclusion follows. In order to prove it, we will make use of the \textbf{Poisson kernel}, which is defined on the unit disc in the complex plane as:
+
+				$$P_r(y) = \sum_{n=-\infty}^\infty r^{|n|}e^{iny} = \frac{1 - r^2}{1 - 2rcos(y) + r^2}$$
+
+			Since this is defined for $n \in [-\infty, \infty]$, we simply extend our domain of $f \in L^1([-\pi, \pi])$ to be $2\pi$ periodic so that it is defined on the real line. Then we claim that our Abel sum power series is equal to the convolution of the Poisson kernel with our function f.
+
+				$$\sum_{n=-\infty}^\infty a_n r^{|n|}e^{inx} = \frac{1}{2\pi} \int_{-\pi}^\pi f(x-y) P_r(y) dy$$
+
+			% apply DCT
+			Note that $P_r(y)$ is a periodic function and bounded, then apply the DCT to pull the infinite sum outside the integral when applying the limit:
+
+				$$\sum_{n=-\infty}^\infty r^{|n|} \frac{1}{2\pi} \int_{-\pi}^\pi f(x-y) e^{iny} dy$$
+
+			% apply translation invariance and periodicity of the functions
+			Then applying the translation invariance of the Lebesgue integral and the periodicity of f and $e^{inx}$, we get:
+
+				$$\int_{-\pi}^\pi f(x-y) e^{iny} dy = \int_{-\pi + x}^{\pi + x} f(y) e^{in(x-y)} dy = e^{inx} \int_{-\pi}^\pi f(y) e^{-iny} dy = e^{inx} 2\pi a_n$$
+
+			where the last equality follows by the definition of the Fourier coefficients. Then combining the two:
+
+				$$\sum_{n=-\infty}^\infty a_n r^{|n|}e^{inx} = \frac{1}{2\pi} \int_{-\pi}^\pi f(x-y) P_r(y) dy$$
+
+			% apply approximations to the identity
+			Note that in Thm 2.1, we showed that for kernels $\{K_\delta\}$ that is an approximation to the identity and f is integrable, then $(f*K_\delta)(x) \rightarrow f(x)$ as $\delta \rightarrow 0$. Since the Poisson kernel is an approximation to the identity, we can simply do a change of variables to say $\delta = 1 - r$, then as $r \rightarrow 1$, then $\delta \rightarrow 0$, and $P_\delta(y)$ will serve as our approximation to the identity.
+
+			% arrive at first conclusion
+			The first conclusion follows, since now this power series converges to f(x) a.e.
+		\end{proof}
+
+		Since $L^2 \subset L^1$ and Hilbert spaces are $L^2$, we now seek a similar conclusion for $f \in L^2$ functions. 
+
+		\begin{theorem} [Fourier series in L2 spaces]
+			Suppose $f \in L^2([-\pi, \pi])$, then we have:
+
+			i) Parseval's relation (essentially Parseval's identity)
+
+				$$\sum_{n=-\infty}^\infty |a_n|^2 = \frac{1}{2\pi} \int_{-\pi}^\pi |f(x)|^2 dx$$
+
+			ii) The mapping $f \mapsto \{a_n\}$ is a unitary correspondence between $L^2([-\pi, \pi])$ and $l^2(\mathcal{Z})$. That is the mapping from function to fourier coefficients is a unitary map.
+
+			iii) The Fourier series of f converges to f in the $L^2$ norm.
+
+				$$\frac{1}{2\pi} \int_{-\pi}^\pi |f(x) - S_N(f)(x)|^2 dx \rightarrow 0$$
+
+			as N goes to infinity with $S_N(f) = \sum_{n} a_n e^{inx}$.
+		\end{theorem}
+		\begin{proof}
+			% strategy apply properties of an orthonormal set in a Hilbert space
+			From our previous theorem, we characterized equivalent properties of an orthonormal set $\{e_k\}$ in a Hilbert space. We can construct an orthonormal set here by taking the exponentials $\{e^{inx}\}$. Since $\{e_k\}$ is defined on the natural numbers, we just have to map $[-\infty, \infty]$ to $\mathcal{N} = \{1, ..., \infty\}$. We simply saay $k = 2n$ for n > 0 and $k = 2|n| - 1$ when n < 0, so k is even when n is positive and odd when n is negative, and then k=1 when n = 0. 
+
+			Since f is integrable (since $f \in H$), then $a_n = 0$ for all n implies f = 0 a.e. Now $(f, e_j) = a_j = 0$ for all j implies f = 0, which means that all other equivalent characterizations of the orthonormal set we made hold. As a result, we have Parseval's identity, and also convergence in L2 norm of the Fourier series to f.
+		\end{proof}
+
+	\subsection{Closed Hilbert Subspaces and Orthogonal Projections}
+		A linear subspace $S \subset H$ is a subset of H that is also a vector space. We say that S is closed if whenever $\{f_n\} \subset S \rightarrow f \in H$, then f also is in S.
+
+		Note that finite-dimensional Hilbert spaces have the property that all subspaces are closed. However, in infinite-dimensional Hilbert spaces, that can fail. For example, the space of Riemann integrable functions is not closed. 
+
+		Due to the orthogonality and geometric structure imposed on Hilbert spaces from the inner product, we have the following lemma for closed subspaces of H, our Hilbert space. First, let us restate the \textbf{parallelogram law}, which states that in Hilbert spaces we have the following:
+
+			$$||f + g||^2 + ||f - g||^2 = 2(||f||^2 + ||g||^2),\ \forall f, g \in H$$
+
+		\begin{lemma}
+			Suppose S is closed subspace of H and $f \in H$, then:
+
+			i) There exists a unique element $g_0 \in S$ that is closest to f in norm:
+
+				$$||f - g_0|| = \inf_{g \in S} ||f - g||$$
+
+			ii) The element $f - g_0$ is perpendicular to S:
+
+				$$(f - g_0, g) = 0, \ \forall g \in S$$
+		\end{lemma}
+		\begin{proof}
+			% strategy
+			WLOG we assume $f \notin S$, since otherwise we pick $g_0 = f$. We then let $d := \inf_{g\in S} ||f -g||$ as the minimum distance between f and the set S. Now, we consider a sequence $\{g_n\} \in S$ such that:
+
+				$$||f - g_n|| \rightarrow d$$
+
+			as $n \rightarrow \infty$. Now, we claim that this sequence is a Cauchy sequence whos limit will be the desired $g_0$. 
+
+			% show that sequence is Cauchy with limit g0
+			Note that in finite-dimensional cases, S being closed means S is compact, and hence Cauchy sequences converge. In infinite-dimensional case, compactness need not hold, so we proceed by using the parallelogram law in Hilbert space H:
+
+				$$A = f - g_n$$
+
+			and 
+
+				$$B = f - g_m$$
+
+			then we get: $||f - g_n + f - g_m||^2 + ||g_m - g_n||^2 = 2(||f-g_n||^2 + ||f-g_m||^2)$. Since S is a subspace, then it is a vector space and hence closed under addition, and so $(g_n + g_m) \in S$, so we get that:
+
+				$$||2f(g_n+g_m)|| = 2||f - \frac{1}{2} (g_n + g_m)|| \ge 2d$$
+
+			by homogeneity and is at least 2 times d. Next, we can bound $||g_m - g_n||^2$ as such:
+
+			\begin{align}
+				||g_m - g_n||^2 = 2(||f - g_n||^2 + ||f - g_m||^2) - ||2f - (g_n + g_m)||^2 \\
+				\le 2(||f - g_n||^2 + ||f - g_m||^2) - 4d^2 
+			\end{align}
+
+			Since by construction both sequences $g_n, g_m$ have the property that $||f - g_k|| \rightarrow d$, then we get that:
+
+				$$\lim_{n,m\rightarrow \infty}||g_m - g_n||^2 \le 2(d^2+d^2) - 4d^2 = 0$$
+
+			and so $\{g_n\}$ is a Cauchy sequence. Since H is complete, then $S \subset H$ is closed, then this Cauchy sequence converges to some element $g_0 \in S$.
+
+			% next show orthogonality
+			Before showing uniqueness, we demonstrate the orthogonality property of the difference. We WTS if $g \in S$ then $g \perp (f - g_0)$. For each $\epsilon$, we consider the perturbation of $g_0$ as $g_0 - \epsilon g$. Note that this element belongs to S and hence:
+
+				$$||f - (g_0 - \epsilon g)||^2 \ge ||f - g_0||^2$$
+
+			by the fact that $g_0$ is the element in S closest to f.
+
+			Next, we see that:
+
+				$$||f - (g_0 - \epsilon g)||^2 = ||f - g_0||^2 + \epsilon^2||g||^2 + 2\epsilon Re(f - g_0, g)$$
+
+			by the linearity of the inner product in the second argument, and the expansion of the norm. By the previous inequality:
+
+				$$\epsilon^2||g||^2 + 2\epsilon Re(f - g_0, g) \ge 0$$
+
+			So if $Re(f - g_0, g) < 0$, then taking a small $\epsilon > 0$ contradicts the inequality. On the other hand if $Re(f - g_0, g) > 0$, then it is also a contradiction when taking $\epsilon < 0$ but small. So we can conclude that $Re(f - g_0, g) = 0$. Likewise by considering $g_0 - i\epsilon g$, we obtain the same for the imaginary component. This shows that $f - g_0$ is orthogonal to g.			
+
+			% show uniqueness
+			This $g_0$ chosen is unique since the orthogonality of $(f - g_0)$ and some other $g = g_0 - g'$. Say g' also minimized $||f - g||$. g is in S and hence perpendicular to $(f - g_0)$, and so by the Pythagorean theorem, we'll get:
+
+				$$||f - g'||^2 = ||f - g_0||^2 + ||g_0 - g'||^2$$
+
+			Since the first two are equal by assumption $||g_0 - g'|| = 0$ and hence $g_0 = g'$.
+		\end{proof}
+
+		% orthogonal complements
+		With orthogonality of elements with an entire subspace, now one can also define the \textbf{orthogonal complement} of S as:
+
+			$$S^\perp = \{f \in H: (f, g) = 0, \text{for all } g \in S\}$$
+
+		Note that the orthogonal complement is also closed, since H is a complete space. The next proposition states that every element of H can be written as a unique sum of an element in S and an element in its orthogonal complement.
+
+		% projection operators
+		Since $H = S \bigoplus S^\perp$, then one can define the projection onto S:
+
+			$$P_S(f) = g$$
+
+		where $f = g + h$, with $f \in H$ and $g \in S, h \in S^\perp$. So the projection operator takes an element in our Hilbert space and subtracts the orthogonal complement. The mapping $P_S$ is called an orthogonal projection and has the properties:
+
+		\begin{enumerate}
+			\item $f \mapsto P_S(f)$ is a linear operator
+			\item $P_S(f) = f$ whenever $f \in S$.
+			\item $P_S(f) = 0$ whenever $f \in S^\perp$
+			\item $||P_S(f)|| \le ||f||$ for all $f \in H$
+		\end{enumerate}
+
+
+	\subsection{Linear Transformations on Hilbert Spaces}
+		We next look at transformations between two Hilbert spaces, $H_1$ and $H_2$. Namely linear transformations / operators $T: H_1 \rightarrow H_2$. T is a linear operator if:
+
+			$$T(af + bg) = aT(f) + bT(g)$$
+
+		for all scalars a,b and $f,g \in H_1$. The following lemma relates the norm of T with the inner product on $H_2$.
+
+		\begin{lemma}
+			For T a bounded linear operator, $||T|| = \sup\{|(Tf, g)|: ||f|| \le 1,\ ||g|| \le 1 \}$.
+		\end{lemma}
+		\begin{proof}
+			Since T is a bounded operator, then $||T|| \le M$, and so the Cauchy-Schwartz inequality gives:
+
+				$$|(Tf, g)| \le ||Tf|| ||g|| \le M||f||||g||$$
+
+			If $||f|| \le 1$ and $||g|| le 1$, then the inner product is bounded by M. So then:
+
+				$$\sup |(Tf, g)| \le ||T||$$
+
+			Note then we can show that $||Tf|| \le M ||f||$ for any f. We simply normalize f by ||f||. 
+		\end{proof}
+
+		Next, we see that linear transformation T is contuous if $T(f_n) \rightarrow T(f)$ whenever $f_n \rightarrow f$. Next we see that boundedness and continuity are equivalent characterizations for linear operators.
+
+		\begin{proposition} [Boundedness is equivalent to continuity of linear operators]
+			A linear operator $T: H_1 \rightarrow H_2$ is bounded if and only if it is continuous.
+		\end{proposition}
+		\begin{proof}
+			If T is bounded, then $||T(f) - T(f_n)||_{H_2} \le M||f - f_n||_{H_1}$ and so T is continuous, since controlling $||T(f) - T(f_n)$ to be smaller then $\epsilon$ is possible by making $||f - f_n|| < \delta$ for some $\delta$.
+
+			% continuity -> bounded
+			If T is continuous, we suppose for contradiction that T is not bounded. Then there exists for each N, $f_n \neq 0$ such that $||T(f_n)|| \ge N ||f_n||$. If we take the element $g_n = f_n / (N ||f_n||)$, then it has norm 1/N, which will converge to zero as n goes to infinity. Since T is continuous, then $T(g_n) \rightarrow 0$ also, which contradicts the fact that $||T(g_n)|| \ge 1 = N 1/N$. Thus T is bounded.
+		\end{proof}
+
+	\subsection{Riesz Representation Theorem}
+		This next section will show the Riesz representation theorem. We first define a linear functional l as a linear transformation from a Hilbert space to the underlying field (i.e. Real or complex numbers).
+
+			$$l: H \rightarrow \mathcal{C}$$
+
+		Note that the inner product on H is a linear functional. In addition, by the Cauchy-Schwartz inequality it is bounded and hence continuous. For a fixed $g \in H$, we can define the linear functional
+
+			$$l(f) = |(f,g)| \le ||f||||g|| = M||f||$$
+
+		In addition, $l(g) = M||g|| = ||g||^2$, so the norm of $l(g) $ is M, which is ||g||, since l is a linear transformation. The Riesz representation theorem states that every continuous linear functional on a Hilbert space comes from an inner product. 
+
+		First, let us define the null space of a linear functional as:
+
+			$$S = \{f \in H: l(f) = 0\}$$
+
+		\begin{theorem} [Riesz representation theorem]
+			Let l be a continuous linear functional on a Hilbert space H. Then there exists a unique $g \in H$ such that:
+
+				$$l(f) = (f, g)$$
+
+			for all $f \in H$. Moreover, $||l|| = ||g||$.
+		\end{theorem}
+
+		This is the null space of l is the subspace of H such that $(f,g) = 0$ for $g \in S$. This is a nice theorem because it tells us given any continuous linear functional on a Hilbert space, we can uniquely represent it as an inner product with some element of our Hilbert space. In addition, the norm of the linear functional is equal to the norm of that element in our Hilbert space.
+
+		\subsubsection{Adjoints}
+			Adjoints are similar to transposes in matrix analysis, but a generalization. As a consequence of the Riesz representation theorem, there always exists a unique bounded linear adjoint for a bounded linear transformation.
+
+			\begin{proposition}
+				Let $T: H \rightarrow H$ be a bounded linear transformation. There exists a unique bounded linear transformation $T^*$ on H with the following properties:
+
+				i) $(Tf, g) = (f, T^*g)$
+
+				ii) $||T|| = ||T^*||$
+
+				iii) $(T^*)^* = T$
+			\end{proposition} 
+
+	\subsection{Integral Operators}
+		Suppose $\{\psi_k\}$ is an orthonormal basis for H. Then a linear transformation $T: H \rightarrow H$ is said to be diagonalized with respect to the basis $\{\psi_k\}$ if:
+
+			$$T(\psi_k) = \lambda_k \psi_k$$
+
+		where $\lambda_k \in \mathcal{C}$ for all k is the correspoinding eigenvalue. $\psi$ are non-zero elements of H called an eigenvector of T. The sequence $\{\lambda_k\}$ is called the multiplier sequence corresponding to T.
+
+		\subsubsection{Hilbert Schmidt operators}
+			If we consider the Hilbert space $H = L^2(\mathbb{R}^d)$, then we can define an operator $T: H \rightarrow H$ by the formula:
+
+				$$T(f)(x) = \int_{\mathbb{R}^d} K(x,y) f(y) dy$$
+
+			whenever $f \in H$. The operator T is an integral operator and K is the associated kernel.
+
+			The class of Hilbert-Schmidt operators are those that can express themeslves as a bounded linear transformation.
+
+			\begin{proposition}
+				Let T be a Hilbert-Schmidit opeprator on $L^2(\mathbb{R}^d)$ with kernel K.
+
+				i) If $f \in L^2$ then for almost every x, the function $y \mapsto K(x,y)f(y)$ is integrable.
+
+				ii) The operator T is bounded from $L^2(\mathbb{R}^d)$ to itself and:
+
+					$$||T|| \le ||K||_{L^2(\mathbb{R}^d \times \mathbb{R}^d)}$$
+
+				where $||K||$ is the L2 norm of K on $\mathbb{R}^d \times \mathbb{R}^d = \mathbb{R}^{2d}$.
+
+				iii) The adjoint $T^*$ has associated kernel $\bar{K(y,x)}$
+			\end{proposition}
+
+	\subsection{Compact Operators}
+
+
+
+\end{document}
